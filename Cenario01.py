@@ -4,37 +4,49 @@ from fpdf import FPDF
 import sys
 import os
 
-arquivo = input("Digite o nome do arquivo de entrada: ")
-resultado = input("Digite o nome do arquivo de saída: ")
-df = pd.read_csv(arquivo,skiprows=(3))
-df2 = df.rename(columns = {'Active Instrument A Channel 1 Current Avg': "Corrente"}, inplace= False)
-df3 = df2.set_index('Time')
-
-df3["Corrente"] = df3["Corrente"].multiply(1000)
-current01 = pd.DataFrame(df3, columns = ["Corrente"])
-print("-"*50)
-print(f"{resultado}.png foi salvo em Resultados\imagens\n{resultado}.pdf foi salvo em Resulados\pdf\n{resultado}.txt foi salvo em Resultados\txt")
-print("-"*25+"FIM"+"-"*25)
-current01.plot(xlabel= 'tempo[s]', ylabel = 'Corrente[mA]', grid = True, legend = False)
-plt.savefig(f'Resultados\imagens\{resultado}.png', dpi=600)
-plt.show()
-df3["Corrente"] = df3["Corrente"].multiply(1/1000)
-current01 = pd.DataFrame(df3, columns = ["Corrente"] )
-media = (round(current01["Corrente"].mean(), 5))
-minimo = (round(current01["Corrente"].min(), 5))
-maximo = (round(current01["Corrente"].max(), 5))
-
-
-def saveAsPDF():
+def saveAsPDF():#gera pdf com resultados e imagem
     pdf = FPDF()
     pdf.add_page()
+    pdf.set_font('Arial', 'B', 20)
+    pdf.cell(w = 0, h=20, txt = f'Resultados {file_out}', align = 'C', ln=1 )
+    pdf.set_xy(5, 35)
     pdf.set_font('Arial', 'B', 12)
-    pdf.multi_cell(w = 0, h = 10, border = 1, txt = 'Corrente média: ' + str(media) + ' A\n'+'Corrente mínima: ' + str(minimo)+' A\n'+'Corrente máxima: ' + str(maximo)+' A')
-    pdf.image(f'Resultados\imagens\{resultado}.png',x = 0, y = 50, w =200, h = 150)
-    pdf.output(f'Resultados\pdf\{resultado}.pdf','F')
+    pdf.multi_cell( w = 0, h = 5, border = 0, txt = 'Corrente média: ' + str(media) + ' A\n'+'Corrente mínima: ' + str(minimo)+' A\n'+'Corrente máxima: ' + str(maximo)+' A')
+    pdf.image(f'Resultados\imagens\{file_out}.jpg',x = 0, y = 50, w =200, h = 150)
+    pdf.output(f'Resultados\pdf\{file_out}.pdf','F')
+
+
+def saveAstxt():#gera txt com resultados
+    os.chdir(r'C:\Users\vntlab\Documents\Keysight\BenchVue\Digital Multimeter\Exports\Resultados\txt')
+    sys.stdout = open(f"{file_out}.txt", 'wt')
+    print('Corrente média: ' + str(media) + ' A\n'+'Corrente minima: ' + str(minimo)+' A\n'+'Corrente maxima: ' + str(maximo)+' A')
+    sys.stdout.close()
+
+
+file_in = input("Digite o nome do arquivo de entrada: ")
+file_out = input("Digite o nome do arquivo de saída: ")
+
+df = pd.read_csv(file_in,skiprows=(3))#converte o arquivo csv em dataframe
+df2 = df.rename(columns = {'Active Instrument A Channel 1 Current Avg': "Corrente"}, inplace= False)#renomeia coluna de df e salva em df2
+df3 = df2.set_index('Time')#troca a indexacao para a coluna Time e salva em df3
+df3["Corrente"] = df3["Corrente"].multiply(1000)#multiplica toda coluna corrente por 1000 para mostrar no grafico em mA
+df4 = pd.DataFrame(df3, columns = ["Corrente"])#a partir do df3 cria um df4 com apenas colunas nomeadas correntes
+
+print("-"*50)
+print(f"{file_out}.png foi salvo em Resultados\imagens\n{file_out}.pdf foi salvo em Resulados\pdf\n{file_out}.txt foi salvo em Resultados"+'\\txt')
+print("-"*25+"FIM"+"-"*25)
+
+#df4.plot(xlabel= 'tempo[s]', ylabel = 'Corrente[mA]', grid = True, legend = False, title = f'{file_out}')
+#fig = plt.figure((figsize = (6,6)))
+df4.plot(xlabel= 'tempo[s]', ylabel = 'Corrente[mA]', grid = True, legend = False, title = f'{file_out}')
+fig.savefig(f'Resultados\imagens\{file_out}.jpg', dpi=fig.dpi)
+fig.show()
+
+
+df4["Corrente"] = df4["Corrente"].multiply(1/1000)#divide a corrente por 1000 para mostrar resultados  em A
+media = (round(df4["Corrente"].mean(), 5))
+minimo = (round(df4["Corrente"].min(), 5))
+maximo = (round(df4["Corrente"].max(), 5))
 
 saveAsPDF()
-os.chdir(r'C:\Users\vntlab\Documents\Keysight\BenchVue\Digital Multimeter\Exports\Resultados\txt')
-sys.stdout = open(f"{resultado}.txt", 'wt')
-print('Corrente média: ' + str(media) + ' A\n'+'Corrente minima: ' + str(minimo)+' A\n'+'Corrente maxima: ' + str(maximo)+' A')
-sys.stdout.close()
+saveAstxt()
