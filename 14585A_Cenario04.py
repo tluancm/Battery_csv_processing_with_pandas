@@ -40,15 +40,13 @@ df4['Bateria[%]'] = (df4["Tensão"]-df4["Tensão"].min())*100/(df4["Tensão"].ma
 df5 = pd.DataFrame(df4, columns = ['Bateria[%]'])
 df5.plot(xlabel= 'tempo[s]', ylabel = 'Bateria[%]', grid = True, legend = False, title = f'{file_out}', figsize = (19.20,10.80))
 plt.savefig(f'Resultados\imagens\{file_out}.jpg', dpi = 600)
-plt.show()
+
 
 media = (round(df4["Tensão"].mean(), 5)) 
 minimo = (round(df4["Tensão"].min(), 5))
 maximo = (round(df4["Tensão"].max(), 5))
-print(df4["Tensão"].max())
 max_index = df4.index[df4["Tensão"] == df4["Tensão"].max()]
 max_index_list = max_index.tolist()
-print(max_index_list)
 t_carga = time.strftime('%H:%M:%S', time.gmtime(max_index_list[0]))
 saveAsPDF()
 saveAstxt()
