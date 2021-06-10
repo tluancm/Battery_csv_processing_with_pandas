@@ -36,11 +36,9 @@ print("-"*50)
 print(f"{file_out}.png foi salvo em Resultados\imagens\n{file_out}.pdf foi salvo em Resulados\pdf\n{file_out}.txt foi salvo em Resultados"+'\\txt')
 print("-"*25+"FIM"+"-"*25)
 
-#df4.plot(xlabel= 'tempo[s]', ylabel = 'Corrente[mA]', grid = True, legend = False, title = f'{file_out}')
-#fig = plt.figure((figsize = (6,6)))
-df4.plot(xlabel= 'tempo[s]', ylabel = 'Corrente[mA]', grid = True, legend = False, title = f'{file_out}')
-fig.savefig(f'Resultados\imagens\{file_out}.jpg', dpi=fig.dpi)
-fig.show()
+df4.plot(xlabel= 'tempo[s]', ylabel = 'Corrente[mA]', grid = True, legend = False, title = f'{file_out}', figsize = (19.20,10.80))
+plt.savefig(f'Resultados\imagens\{file_out}.jpg', dpi = 600)
+plt.show()
 
 
 df4["Corrente"] = df4["Corrente"].multiply(1/1000)#divide a corrente por 1000 para mostrar resultados  em A
