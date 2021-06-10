@@ -7,10 +7,10 @@ import os
 def saveAsPDF():#gera pdf com resultados e imagem
     pdf = FPDF()
     pdf.add_page()
-    pdf.set_font('Arial', 'B', 20)
+    pdf.set_font('helvetica', 'B', 20)
     pdf.cell(w = 0, h=20, txt = f'Resultados {file_out}', align = 'C', ln=1 )
     pdf.set_xy(5, 35)
-    pdf.set_font('Arial', 'B', 12)
+    pdf.set_font('helvetica', 'B', 12)
     pdf.multi_cell( w = 0, h = 5, border = 0, txt = 'Corrente média: ' + str(media) + ' A\n'+'Corrente mínima: ' + str(minimo)+' A\n'+'Corrente máxima: ' + str(maximo)+' A')
     pdf.image(f'Resultados\imagens\{file_out}.jpg',x = 0, y = 50, w =200, h = 150)
     pdf.output(f'Resultados\pdf\{file_out}.pdf','F')
@@ -38,8 +38,6 @@ print("-"*25+"FIM"+"-"*25)
 
 df4.plot(xlabel= 'tempo[s]', ylabel = 'Corrente[mA]', grid = True, legend = False, title = f'{file_out}', figsize = (19.20,10.80))
 plt.savefig(f'Resultados\imagens\{file_out}.jpg', dpi = 600)
-plt.show()
-
 
 df4["Corrente"] = df4["Corrente"].multiply(1/1000)#divide a corrente por 1000 para mostrar resultados  em A
 media = (round(df4["Corrente"].mean(), 5))
@@ -48,3 +46,6 @@ maximo = (round(df4["Corrente"].max(), 5))
 
 saveAsPDF()
 saveAstxt()
+
+
+
