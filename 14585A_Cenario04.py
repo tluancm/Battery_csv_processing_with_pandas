@@ -28,6 +28,7 @@ file_in = input("Digite o nome do arquivo de entrada: ")
 file_out = input("Digite o nome do arquivo de saída: ")
 
 df = pd.read_csv(file_in,skiprows=(3))#converte o arquivo csv em dataframe
+df['Time'] = df['Time'].round(decimals = 1)
 df2 = df.rename(columns = {'File1 Instrument A Channel 1 Voltage Avg': "Tensão"}, inplace= False)#renomeia coluna de df e salva em df2
 df3 = df2.set_index('Time')#troca a indexacao para a coluna Time e salva em df3
 df4 = pd.DataFrame(df3, columns = ["Tensão"])#a partir do df3 cria um df4 com apenas colunas nomeadas Tensãos
@@ -38,17 +39,34 @@ print("-"*25+"FIM"+"-"*25)
 
 df4['Bateria[%]'] = (df4["Tensão"]-df4["Tensão"].min())*100/(df4["Tensão"].max()-df4["Tensão"].min())
 df5 = pd.DataFrame(df4, columns = ['Bateria[%]'])
+
+zero_index= df5.index[df5["Bateria[%]"] == df5["Bateria[%]"].min()]
+zero_index_list = zero_index.tolist()
+
+apagar = int(zero_index_list[0])
+df5 = df5.drop(range(apagar, -1, -1))
+#df5['Time'] = df5['Time'].subtract(apagar-1)
+
 df5.plot(xlabel= 'tempo[s]', ylabel = 'Bateria[%]', grid = True, legend = False, title = f'{file_out}', figsize = (19.20,10.80))
 plt.savefig(f'Resultados\imagens\{file_out}.jpg', dpi = 600)
 plt.show()
 
+opt = input('Truncar gráfico a partir de um tempo?[s] ou [n]: ')
+if (opt == 'N' or 'n'): pass
+if (opt == 'S'or 's'):
+    zerar = int(input('Digite a partir de qual tempo em segundos os dados serão eliminados: '))
+    df5 = df5.drop(range(zerar, int(df5.index[-1])+1))
+    print(df5)
+    df5.plot(xlabel= 'tempo[s]', ylabel = 'Bateria[%]', grid = True, legend = False, title = f'{file_out}', figsize = (19.20,10.80))
+    plt.savefig(f'Resultados\imagens\{file_out}.jpg', dpi = 600)
+    plt.show()
+
 media = (round(df4["Tensão"].mean(), 5)) 
 minimo = (round(df4["Tensão"].min(), 5))
 maximo = (round(df4["Tensão"].max(), 5))
-print(df4["Tensão"].max())
 max_index = df4.index[df4["Tensão"] == df4["Tensão"].max()]
 max_index_list = max_index.tolist()
-print(max_index_list)
 t_carga = time.strftime('%H:%M:%S', time.gmtime(max_index_list[0]))
+
 saveAsPDF()
 saveAstxt()
