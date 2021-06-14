@@ -12,12 +12,12 @@ def saveAsPDF():#gera pdf com resultados e imagem
     pdf.set_xy(5, 35)
     pdf.set_font('helvetica', 'B', 12)
     pdf.multi_cell( w = 0, h = 5, border = 0, txt = 'Corrente média: ' + str(media) + ' A\n'+'Corrente mínima: ' + str(minimo)+' A\n'+'Corrente máxima: ' + str(maximo)+' A')
-    pdf.image(f'Resultados\imagens\{file_out}.jpg',x = 0, y = 50, w =200, h = 150)
-    pdf.output(f'Resultados\pdf\{file_out}.pdf','F')
+    pdf.image(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg',x = 0, y = 50, w =200, h = 150)
+    pdf.output(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\pdf\\{file_out}.pdf','F')
 
 
 def saveAstxt():#gera txt com resultados
-    os.chdir(r'C:\Users\vntlab\Documents\Keysight\BenchVue\Digital Multimeter\Exports\Resultados\txt')
+    os.chdir(r'C:\Users\VNTTAMA\Desktop\Relatorios\txt')
     sys.stdout = open(f"{file_out}.txt", 'wt')
     print('Corrente média: ' + str(media) + ' A\n'+'Corrente minima: ' + str(minimo)+' A\n'+'Corrente maxima: ' + str(maximo)+' A')
     sys.stdout.close()
@@ -37,7 +37,7 @@ print(f"{file_out}.png foi salvo em Resultados\imagens\n{file_out}.pdf foi salvo
 print("-"*25+"FIM"+"-"*25)
 
 df4.plot(xlabel= 'tempo[s]', ylabel = 'Corrente[mA]', grid = True, legend = False, title = f'{file_out}', figsize = (19.20,10.80))
-plt.savefig(f'Resultados\imagens\{file_out}.jpg', dpi = 600)
+plt.savefig(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg', dpi = 600)
 
 df4["Corrente"] = df4["Corrente"].multiply(1/1000)#divide a corrente por 1000 para mostrar resultados  em A
 media = (round(df4["Corrente"].mean(), 5))
