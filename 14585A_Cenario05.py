@@ -33,7 +33,7 @@ df2 = df.rename(columns = {'File1 Instrument A Channel 1 Voltage Avg': "Tensão"
 df3 = df2.set_index('Time')#troca a indexacao para a coluna Time e salva em df3
 df4 = pd.DataFrame(df3, columns = ["Tensão"])#a partir do df3 cria um df4 com apenas colunas nomeadas Tensãos
 print("-"*50)
-print(f"{file_out}.png foi salvo em Resultados\imagens\n{file_out}.pdf foi salvo em Resulados\pdf\n{file_out}.txt foi salvo em Resultados"+'\\txt')
+print(f"{file_out}.png foi salvo em Relatorios\imagens\n{file_out}.pdf foi salvo em Relatorios\pdf\n{file_out}.txt foi salvo em Relatorios"+'\\txt')
 print("-"*25+"FIM"+"-"*25)
 
 df4['Bateria[%]'] = (df4["Tensão"]-df4["Tensão"].min())*100/(df4["Tensão"].max()-df4["Tensão"].min())

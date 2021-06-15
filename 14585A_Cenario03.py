@@ -26,8 +26,17 @@ def saveAstxt():#gera txt com resultados
 file_in = input("Digite o nome do arquivo de entrada: ")
 file_out = input("Digite o nome do arquivo de saída: ")
 
+model = (input('Este modelo tem impressao?[s][n] '))
+for k in range(0,5):
+    ti.append(int(input(f'ti_{k} = ')))
+    tf.append(int(input(f'tf_{k} = ')))
+    dt.append(tf[k] - ti[k])
+    
+
+
 df = pd.read_csv(file_in,skiprows=(3))#converte o arquivo csv em dataframe
 df2 = df.rename(columns = {'Active Instrument A Channel 1 Current Avg': "Corrente"}, inplace= False)#renomeia coluna de df e salva em df2
+df2['Time'] = int(round(df2['Time']))
 df3 = df2.set_index('Time')#troca a indexacao para a coluna Time e salva em df3
 df3["Corrente"] = df3["Corrente"].multiply(1000)#multiplica toda coluna corrente por 1000 para mostrar no grafico em mA
 df4 = pd.DataFrame(df3, columns = ["Corrente"])#a partir do df3 cria um df4 com apenas colunas nomeadas correntes

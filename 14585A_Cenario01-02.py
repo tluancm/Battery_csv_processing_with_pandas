@@ -33,7 +33,7 @@ df3["Corrente"] = df3["Corrente"].multiply(1000)#multiplica toda coluna corrente
 df4 = pd.DataFrame(df3, columns = ["Corrente"])#a partir do df3 cria um df4 com apenas colunas nomeadas correntes
 
 print("-"*50)
-print(f"{file_out}.png foi salvo em Resultados\imagens\n{file_out}.pdf foi salvo em Resulados\pdf\n{file_out}.txt foi salvo em Resultados"+'\\txt')
+print(f"{file_out}.png foi salvo em Relatorios\imagens\n{file_out}.pdf foi salvo em Relatorios\pdf\n{file_out}.txt foi salvo em Relatorios"+'\\txt')
 print("-"*25+"FIM"+"-"*25)
 
 df4.plot(xlabel= 'tempo[s]', ylabel = 'Corrente[mA]', grid = True, legend = False, title = f'{file_out}', figsize = (19.20,10.80))

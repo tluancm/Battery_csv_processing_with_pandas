@@ -1,7 +1,7 @@
-loop = int(input("tamanho do laço: "))
-ti = [0]
-tf = [0]
-dt = [0]
+
+ti = []
+tf = []
+dt = []
 
 # for k in range(1,loop):
 #     ti[k][0] = int(input('ti_1 = '))
@@ -9,12 +9,10 @@ dt = [0]
 #     ti[k][2] = int(input('ti_1 = '))  
 # print(ti)
 
-for k in range(-1,loop):
-    inicio = int(input(f'ti_{k} = '))
-    ti.append(inicio)
-    final = int(input(f'tf_{k} = '))
-    tf.append(final)
+for k in range(0,5):
+    ti.append(int(input(f'ti_{k} = ')))
+    tf.append(int(input(f'tf_{k} = ')))
     print(tf[k],ti[k])
-    diftotal = tf[k] - ti[k]
-    dt.append(diftotal)
-print(ti,tf)
+    dt.append(tf[k] - ti[k])
+    
+print(ti,tf, dt)
