@@ -7,11 +7,19 @@ import os
 def saveAsPDF():#gera pdf com resultados e imagem
     pdf = FPDF()
     pdf.add_page()
-    pdf.set_font('helvetica', 'B', 20)
+    pdf.set_font('Times', 'B', 16)
     pdf.cell(w = 0, h=20, txt = f'Resultados {file_out}', align = 'C', ln=1 )
-    pdf.set_xy(5, 35)
-    pdf.set_font('helvetica', 'B', 12)
-    pdf.multi_cell( w = 0, h = 5, border = 0, txt = 'Corrente média: ' + str(media) + ' A\n'+'Corrente mínima: ' + str(minimo)+' A\n'+'Corrente máxima: ' + str(maximo)+' A')
+    epw = pdf.w -2*pdf.l_margin
+    cold_widht = epw/3
+    pdf.set_font('Times', 'B', 12)
+    pdf.cell(w= cold_widht, h= 6, border =1, txt= 'Corrente média [A]' )
+    pdf.cell(w= cold_widht, h= 6, border= 1, txt= 'Corrente miníma [A]')
+    pdf.cell(w= cold_widht, h= 6, border= 1, ln=1,txt= 'Corrente máxima [A]' )
+
+    pdf.cell(w= cold_widht, h= 6, border= 1,txt= f'{media}' )
+    pdf.cell(w= cold_widht, h= 6, border= 1,txt= f'{minimo}')
+    pdf.cell(w= cold_widht, h= 6, border= 1, ln=1,txt= f'{maximo}' )
+    
     pdf.image(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg',x = 0, y = 50, w =200, h = 150)
     pdf.output(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\pdf\\{file_out}.pdf','F')
 
