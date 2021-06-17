@@ -22,7 +22,7 @@ def saveAsPDF():#gera pdf com resultados e imagem
     pdf.cell(w= cold_widht-6, h= 6, align = 'C',border= 1,txt= f'{media}' )
     pdf.cell(w= cold_widht-6, h= 6, align = 'C',border= 1,txt= f'{minimo}')
     pdf.cell(w= cold_widht-6, h= 6, align = 'C',border= 1,txt= f'{maximo}' )
-    pdf.cell(w= cold_widht+18, h= 6,align = 'C', border= 1, ln=1,txt= f'{t_carga}' )
+    pdf.cell(w= cold_widht+18, h= 6,align = 'C', border= 1, ln=1,txt= f'{t_descarga}' )
 
     pdf.cell(w = 0, h= 6,border= 0,align = 'C', ln= 1, txt='' )
     cold_widht2 = epw/3
@@ -42,7 +42,7 @@ def saveAsPDF():#gera pdf com resultados e imagem
         pdf.cell(w = cold_widht3, h= 6,align = 'C', border=1, txt= f'{t_header[k]}')
         pdf.cell(w = cold_widht3, h=6,align = 'C', border= 1, ln=1, txt= f'bbbbb')
 
-    pdf.image(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg',x = 0, y = 120, w =200, h = 150)
+    pdf.image(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg',x = 0, y = 100, w =200, h = 150)
     pdf.output(f"C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\pdf\\{file_out}.pdf",'F')
 
 
@@ -90,7 +90,7 @@ min_index = df4.index[df4["Tensão"] == df4["Tensão"].min()]
 min_index_list = min_index.tolist()
 t_descarga = time.strftime('%H:%M:%S', time.gmtime(min_index_list[0]))
 
-header = input('É possível observar a carga pelo header? [s][n]: ')
+header = input('É possível observar a carga pelo header? [s] ou [n]: ')
 
 t_header =[]
 t_conv_list = []
