@@ -8,12 +8,43 @@ import time
 def saveAsPDF():#gera pdf com resultados e imagem
     pdf = FPDF()
     pdf.add_page()
-    pdf.set_font('helvetica', 'B', 20)
+    pdf.set_font('Times', 'B', 16)
     pdf.cell(w = 0, h=20, txt = f'Resultados {file_out}', align = 'C', ln=1 )
-    pdf.set_xy(5, 35)
-    pdf.set_font('helvetica', 'B', 12)
-    pdf.multi_cell( w = 0, h = 5, border = 0, txt = 'Tensão média: ' + str(media) + ' V\n'+'Tensão mínima: ' + str(minimo)+' V\n'+'Tensão máxima: ' + str(maximo)+' V\n'+'Tempo de carregamento: '+t_carga)
-    pdf.image(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg',x = 0, y = 70, w =200, h = 150)
+    pdf.set_font('Times', 'B', 12)
+    epw = pdf.w -2*pdf.l_margin
+    cold_widht = epw/4
+
+    pdf.cell(w= cold_widht-6, h= 6, align = 'C',border =1, txt= 'Tensão média [V]' )
+    pdf.cell(w= cold_widht-6, h= 6, align = 'C',border= 1, txt= 'Tensão miníma [V]')
+    pdf.cell(w= cold_widht-6, h= 6, align = 'C',border= 1,txt= 'Tensão máxima [V]' )
+    pdf.cell(w= cold_widht+18, h= 6,align = 'C', border= 1, ln=1,txt= 'Tempo de carregamento [h:m:s]' )
+
+    pdf.cell(w= cold_widht-6, h= 6, align = 'C',border= 1,txt= f'{media}' )
+    pdf.cell(w= cold_widht-6, h= 6, align = 'C',border= 1,txt= f'{minimo}')
+    pdf.cell(w= cold_widht-6, h= 6, align = 'C',border= 1,txt= f'{maximo}' )
+    pdf.cell(w= cold_widht+18, h= 6,align = 'C', border= 1, ln=1,txt= f'{t_carga}' )
+
+    pdf.cell(w = 0, h= 6,border= 0,align = 'C', ln= 1, txt='' )
+    cold_widht2 = epw/3
+    cold_widht3 = epw/4
+    pdf.cell(w= cold_widht3, h= 6,align = 'C', border= 1,txt= ' ' )
+    pdf.cell(w= 2*cold_widht3, h= 6,align = 'C', border= 1,txt= 'Tempo' )
+    pdf.cell(w= cold_widht3, h= 6,align = 'C',ln=1, border= 1,txt= ' ' )
+    
+    pdf.cell(w= cold_widht3, h= 6,align = 'C', border= 1,txt= 'Barras #' )
+    pdf.cell(w= cold_widht3, h= 6,align = 'C', border= 1,txt= 's' )
+    pdf.cell(w= cold_widht3, h= 6,align = 'C', border= 1,txt= 'h:m:s' )
+    pdf.cell(w= cold_widht3, h= 6,align = 'C',ln= 1, border= 1,txt= 'Bateria[%]')
+    if (header == 's' or header =='S'):
+        for k in range(0, barras):
+            pdf.cell(w = cold_widht3, h= 6,align = 'C', border=1, txt= f'{k+1}' )
+            pdf.cell(w = cold_widht3, h=6,align = 'C', border=1, txt= f'{t_conv_list[k]}')
+            pdf.cell(w = cold_widht3, h= 6,align = 'C', border=1, txt= f'{t_header[k]}')
+            pdf.cell(w = cold_widht3, h=6,align = 'C', border= 1, ln=1, txt= f'{battery[k]}')
+    else: 
+        pdf.multi_cell(w = 0, border= 1, txt= f'{comment}')        
+
+    pdf.image(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg',x = 0, y = 100, w =200, h = 150)
     pdf.output(f"C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\pdf\\{file_out}.pdf",'F')
 
 
@@ -50,15 +81,15 @@ plt.savefig(f"C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg",
 plt.show()
 
 opt = input('Truncar gráfico a partir de um tempo?[s] ou [n]: ')
-if (opt == 'N' or 'n'):
-    print('\n Encerrado')
+if (opt == 'N' or 'n'): pass
+    # print('\n Encerrado')
 elif (opt == 'S'or 's'):
     zerar = int(input('Digite a partir de qual tempo em segundos os dados serão eliminados: '))
     df5 = df5.drop(range(zerar, int(df5.index[-1])+1))
     print(df5)
     df5.plot(xlabel= 'tempo[s]', ylabel = 'Bateria[%]', grid = True, legend = False, title = f'{file_out}', figsize = (19.20,10.80))
     plt.savefig(f"C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg", dpi = 600)
-    plt.show()
+    #plt.show()
 
 media = (round(df4["Tensão"].mean(), 5)) 
 minimo = (round(df4["Tensão"].min(), 5))
@@ -67,5 +98,25 @@ max_index = df4.index[df4["Tensão"] == df4["Tensão"].max()]
 max_index_list = max_index.tolist()
 t_carga = time.strftime('%H:%M:%S', time.gmtime(max_index_list[0]))
 
+header = input('É possível observar a carga pelo header? [s][n]: ')
+print(df5)
+t_header =[]
+t_conv_list = []
+battery = []
+if (header =='s' or header== 'S'):
+    barras = int(input('Quantidade total de barras do header: '))
+    
+    for k in range(0, barras):
+        t_convert = (str(input(f'Tempo para atingir {k+1} barras: ')))   
+        t_header.append(t_convert)
+        h, m, s = t_convert.split(':')
+        t_convert2 = int(h)*3600 + int(m)*60 + int(s)
+        t_conv_list.append(t_convert2)
+        battery.append(df5.iloc[t_convert2, 0])    
+    battery = [int(round(n, 0)) for n in battery ]
+else:
+    comment = str(input('Comente: '))    
+
+
 saveAsPDF()
-saveAstxt()
+#saveAstxt()
