@@ -10,24 +10,40 @@ def saveAsPDF():#gera pdf com resultados e imagem
     pdf = FPDF()
     pdf.add_page()
     epw = pdf.w -2*pdf.l_margin
-    col_widht = epw/5
+    col_widht = epw/5 -3
+    col_widht2 = epw/3
     pdf.set_font('Times', 'B', 16)
     pdf.cell(w = 0, h=20, txt = f'Resultados {file_out}', align = 'C', ln=1 )
-    #pdf.set_xy(5, 35)
     pdf.set_font('Times', 'B', 12)
-    pdf.cell(w = col_widht, h =6, border = 1, align = 'C',  txt = "Transação#" )
+
+    pdf.cell(w = col_widht, h =6, border = 1, align = 'C',  txt = "Transação #" )
     pdf.cell(w = col_widht, h =6, border =1, align = 'C', txt = "Início [s]")
     pdf.cell(w = col_widht, h =6, border =1, align = 'C',  txt = "Fim [s]")
     pdf.cell(w = col_widht, h =6, border =1, align = 'C',  txt = "Duração [s]")
-    pdf.cell(w = 45, h =6, border =1,ln =1, align = 'C', txt = "Corrente média [mA]")
+    pdf.cell(w = col_widht+12, h =6, border =1,ln =1, align = 'C', txt = "Corrente média [mA]")
     for k in range(0,5):
         pdf.cell(w = col_widht, h =6, border = 1, align = 'C',  txt = f"{k}" )
         pdf.cell(w = col_widht, h =6, border =1, align = 'C',  txt = f"{ti[k]}")
         pdf.cell(w = col_widht, h =6, border =1, align = 'C',  txt = f"{tf[k]}")
         pdf.cell(w = col_widht, h =6, border =1, align = 'C', txt = f"{dt[k]}")
-        pdf.cell(w = 45, h =6, border =1,ln =1, align = 'C', txt = f"{mean2[k]}")
-    
-    pdf.image(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg',x = 0, y = 140, w =200, h = 150)
+        pdf.cell(w = col_widht+12, h =6, border =1,ln =1, align = 'C', txt = f"{mean2[k]}")
+    pdf.cell(w =  3*col_widht, h = 6, border = 1, align = 'C', txt = "Média")
+    pdf.cell(w = col_widht, h = 6, border = 1, align= 'C', txt = f"{dt_mean}" )
+    pdf.cell(w = col_widht+12, h = 6, border= 1,ln= 1, align= 'C', txt=f"{mean_t}" )
+
+    pdf.cell(w = 0, h= 6,border= 0, ln= 1, txt='' )
+
+    pdf.cell(w = col_widht2,h= 6, border= 1,align= 'C', txt= "Transação #" )
+    pdf.cell(w = col_widht2,h= 6, border= 1,align= 'C', txt= "Corrente 1ª via [mA]" )
+    pdf.cell(w = col_widht2,h= 6, border= 1, ln=1, align= 'C', txt= "Corrente 2ª via [mA]" )
+    for k in range(0,5):
+        pdf.cell(w = col_widht2, h =6, border = 1, align = 'C',  txt = f"{k}" )
+        pdf.cell(w = col_widht2, h =6, border =1, align = 'C',  txt = f"{imp1[k]}")
+        pdf.cell(w = col_widht2, h =6, border =1,ln= 1,  align = 'C',  txt = f"{imp2[k]}")
+    pdf.cell(w = col_widht2, h= 6, border = 1, align= 'C', txt= 'Média')    
+    pdf.cell(w = col_widht2, h= 6,border= 1, align= 'C', txt= f'{mean_imp1}' )
+    pdf.cell(w = col_widht2, h= 6,border= 1, align= 'C', txt= f'{mean_imp2}' )
+    pdf.image(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg',x = 0, y = 125, w =200, h = 150)
     pdf.output(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\pdf\\{file_out}.pdf','F')
 
 
@@ -45,15 +61,29 @@ def saveAstxt():#gera txt com resultados
 file_in = input("Digite o nome do arquivo de entrada: ")
 file_out = input("Digite o nome do arquivo de saída: ")
 
-#model = (input('Este modelo tem impressao?[s][n] '))
+model = (input('Este modelo tem impressao?[s][n]:  '))
 ti =[]
 tf = []
 dt = []
+imp1 = []
+imp2 = []
 for k in range(0,5):
     ti.append(int(input(f'ti_{k} = ')))
     tf.append(int(input(f'tf_{k} = ')))
+    if (model == 's'or model == 'S'):
+        imp1.append(float(input(f'Corrente 1ª via [mA]: ')))
+        imp2.append(float(input(f'Corrente 2ª via [mA]: ')))
+    else:
+        imp1.append('-')
+        imp2.append('-')
     dt.append(tf[k] - ti[k])
-
+if (model == 's' or model == 'S'):    
+    mean_imp1 = round(sts.mean(imp1), 3)
+    mean_imp2 = round(sts.mean(imp2), 3) 
+else:
+    mean_imp1 = '-'
+    mean_imp2 = '-'    
+dt_mean = sts.mean(dt)
 ti_m = [c*2 for c in ti]    
 tf_m = [c*2 for c in tf]
 
@@ -71,6 +101,7 @@ for k in range(0, 5):
     mean.append(df4.iloc[ti_m[k]:tf_m[k]+1,0].mean())
 mean2 = [round(n, 3) for n in mean ]  
 mean_t = round(sts.mean(mean), 3)
+
 print("-"*50)
 print(f"{file_out}.png foi salvo em Relatorios\imagens\n{file_out}.pdf foi salvo em Relatorios\pdf\n{file_out}.txt foi salvo em Relatorios"+'\\txt')
 print("-"*25+"FIM"+"-"*25)
