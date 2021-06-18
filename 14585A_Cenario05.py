@@ -43,11 +43,11 @@ def saveAsPDF():#print output as pdf file
         pdf.cell(w = col_widht2, h= 6,align = 'C', border=1, txt= f'{t_header[k]}')
         pdf.cell(w = col_widht2, h=6,align = 'C', border= 1, ln=1, txt= f'{battery[k]}')
 
-    pdf.image(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg',x = -10, y = 100, w =225, h = 150)
-    pdf.output(f"C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\pdf\\{file_out}.pdf",'F')
+    pdf.image(f'C:\\Users\\taylo\OneDrive\\Área de Trabalho\\Relatorios\\imagens\\{file_out}.jpg',x = -10, y = 100, w =225, h = 150)
+    pdf.output(f"C:\\Users\\taylo\\OneDrive\\Área de Trabalho\\Relatorios\\pdf\\{file_out}.pdf",'F')
 
 def saveAstxt():#open a txt file and write the results
-    os.chdir(r'C:\Users\VNTTAMA\Desktop\Relatorios\txt')#create directory
+    os.chdir(r'C:\Users\taylo\OneDrive\Área de Trabalho\Relatorios\txt')#create directory
     sys.stdout = open(f"{file_out}.txt", 'wt')#open file to write
     print(text)
     sys.stdout.close()
@@ -67,7 +67,7 @@ df5.plot( grid = True, legend = False, figsize = (19.20,10.80))
 plt.xlabel('tempo [s]', fontsize=22)
 plt.ylabel('Bateria [%]', fontsize=22)
 plt.suptitle(f'{file_out}'+" gráfico", fontsize= 26)
-plt.savefig(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg', dpi = 600)
+plt.savefig(f'C:\\Users\\taylo\\OneDrive\\Área de Trabalho\\Relatorios\\imagens\{file_out}.jpg', dpi = 600)
 plt.show()
 
 opt = input('Truncar gráfico a partir de um tempo?[s] ou [n]: ')
@@ -80,7 +80,7 @@ elif (opt == 'S'or 's'):#drop rows based on user input
     plt.xlabel('tempo [s]', fontsize=22)
     plt.ylabel('Bateria [%]', fontsize=22)
     plt.suptitle(f'{file_out}'+" gráfico", fontsize= 26)
-    plt.savefig(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg', dpi = 600)
+    plt.savefig(f'C:\\Users\\taylo\\OneDrive\\Área de Trabalho\\Relatorios\\imagens\{file_out}.jpg', dpi = 600)
     plt.show()
 
 media = (round(df4["Tensão"].mean(), 5)) 

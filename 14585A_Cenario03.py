@@ -44,11 +44,11 @@ def saveAsPDF():#print output as pdf file
     pdf.cell(w = col_widht2, h= 6, border = 1, align= 'C', txt= 'Média')    
     pdf.cell(w = col_widht2, h= 6,border= 1, align= 'C', txt= f'{mean_imp1}' )
     pdf.cell(w = col_widht2, h= 6,border= 1, align= 'C', txt= f'{mean_imp2}' )
-    pdf.image(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg',x = -10, y = 125, w =225, h = 150)
-    pdf.output(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\pdf\\{file_out}.pdf','F')
+    pdf.image(f'C:\\Users\\taylo\OneDrive\\Área de Trabalho\\Relatorios\\imagens\\{file_out}.jpg',x = -10, y = 125, w =225, h = 150)
+    pdf.output(f'C:\\Users\\taylo\\OneDrive\\Área de Trabalho\\Relatorios\\pdf\\{file_out}.pdf','F')
 
 def saveAstxt():#open a txt file and write the results
-    os.chdir(r'C:\Users\VNTTAMA\Desktop\Relatorios\txt')#create directory
+    os.chdir(r'C:\Users\taylo\OneDrive\Área de Trabalho\Relatorios\txt')#create directory
     sys.stdout = open(f"{file_out}.txt", 'wt')#open file to write
     print(text)
     sys.stdout.close()
@@ -100,7 +100,7 @@ df4.plot( grid = True, legend = False, figsize = (19.20,10.80))
 plt.xlabel('tempo [s]', fontsize=22)
 plt.ylabel('Corrente [mA]', fontsize=22)
 plt.suptitle(f'{file_out}'+" gráfico", fontsize= 26)
-plt.savefig(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg', dpi = 600)
+plt.savefig(f'C:\\Users\\taylo\\OneDrive\\Área de Trabalho\\Relatorios\\imagens\{file_out}.jpg', dpi = 600)
 
 df4["Corrente"] = df4["Corrente"].multiply(1/1000)#variables will be presented as Ampere unity
 media = (round(df4["Corrente"].mean(), 5))
