@@ -73,8 +73,8 @@ plt.savefig(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg',
 plt.show()
 
 opt = input('Truncar gráfico a partir de um tempo?[s] ou n[n]: ')
-if (opt == 'N' or 'n'): pass
-elif (opt == 'S'or 's'):#drop rows based on user input on time and generate updated graph
+if (opt == 'N' or opt == 'n'): pass
+elif (opt == 'S'or opt =='s'):#drop rows based on user input on time and generate updated graph
     zerar = int(input('Digite a partir de qual tempo em segundos os dados serão eliminados: '))
     df5 = df5.drop(range(zerar, int(df5.index[-1])+1))
     df5.plot( grid = True, legend = False, figsize = (19.20,10.80))
