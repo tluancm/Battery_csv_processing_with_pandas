@@ -38,14 +38,14 @@ def saveAsPDF():#print output as pdf file
     pdf.cell(w= cold_widht3, h= 6,align = 'C', border= 1,txt= 's' )
     pdf.cell(w= cold_widht3, h= 6,align = 'C', border= 1,txt= 'hh:mm:ss' )
     pdf.cell(w= cold_widht3, h= 6,align = 'C',ln= 1, border= 1,txt= 'Bateria[%]')
-    if (values['-IN-'] == True):
+    if (flag == TRUE):
         for k in range(0, barras):
             pdf.cell(w = cold_widht3, h= 6,align = 'C', border=1, txt= f'{k+1}' )
             pdf.cell(w = cold_widht3, h=6,align = 'C', border=1, txt= f'{t_conv_list[k]}')
             pdf.cell(w = cold_widht3, h= 6,align = 'C', border=1, txt= f'{t_header[k]}')
             pdf.cell(w = cold_widht3, h=6,align = 'C', border= 1, ln=1, txt= f'{battery[k]}')
     else: 
-        pdf.multi_cell(w = 0, border= 1, txt= values['comment'])        
+        pdf.multi_cell(w = 0, border= 1, txt= f'{comment}')        
 
     pdf.image(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg',x = -10, y = 100, w =225, h = 150)
     pdf.output(f"C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\pdf\\{file_out}.pdf",'F')
@@ -54,33 +54,32 @@ def saveAstxt():#open a txt file and write the results
     os.chdir(r'C:\Users\VNTTAMA\Desktop\Relatorios\txt')#create directory
     sys.stdout = open(f"{file_out}.txt", 'wt')#open file to write
     print(text)
-    sys.stdout.close()                      
+    sys.stdout.close()      
 
-layout = [[sg.Text('Filename')],
-            [sg.Input(key = 'file_in'), sg.FileBrowse(initial_folder= 'C:\\Users\\VNTTAMA\\Desktop\\logs-csv')], 
+sg.theme('Reddit')
+layout = [[sg.Text('CSV File')],
+            [sg.Input(key = 'file_in'), sg.FileBrowse(initial_folder= 'C:\\Users\\VNTTAMA\\Desktop\\logs-csv', file_types=(("CSV Files", ".*csv"),))], 
             [sg.Input(key = 'file_out'), sg.Text('File out')],
             [sg.Checkbox('É possível obter a carga pelo header?', key= '-IN-')],
+            [sg.Text('Comentário')],
+            [sg.Multiline(key= 'comment', size=(50,5), default_text='Comente caso não seja possível.')],
             
-            [sg.Input(key= 'barras'),sg.Text('Quantidade de barras no header:')],
+            [sg.Input(key= 'barras', size=(1,1)),sg.Text('Quantidade de barras no header:')],
             
-            [sg.Input(key= 't_header_0'), sg.Text('Tempo para atingir 1 Barra  [hh:mm:ss]')],
-            [sg.Input(key= 't_header_1'), sg.Text('Tempo para atingir 2 Barras [hh:mm:ss]')],
-            [sg.Input(key= 't_header_2'), sg.Text('Tempo para atingir 3 Barras [hh:mm:ss]')],
-            [sg.Input(key= 't_header_3'), sg.Text('Tempo para atingir 4 Barras [hh:mm:ss]')],
-            [sg.Input(key= 't_header_4'), sg.Text('Tempo para atingir 5 Barras [hh:mm:ss]')],
-            [sg.Input(key= 't_header_5'), sg.Text('Tempo para atingir 6 Barras [hh:mm:ss]')],
-            [sg.Input(key= 'comment'), sg.Text('Comentário')],   
-            [sg.Button('Save'), sg.Cancel()],
-            [sg.Checkbox('Zerar gráfico a partir de um tempo em segundos?', key= '-S-')],
-            [sg.Input(key= 'zerar'), sg.Text('Tempo em segundos')],
-            [sg.Button('Overwrite'), sg.Cancel()]
+            [sg.Input(key= 't_header_0', size=(8,1)), sg.Text('Tempo para atingir 1 Barras [hh:mm:ss]')],
+            [sg.Input(key= 't_header_1', size=(8,1)), sg.Text('Tempo para atingir 2 Barras [hh:mm:ss]')],
+            [sg.Input(key= 't_header_2', size=(8,1)), sg.Text('Tempo para atingir 3 Barras [hh:mm:ss]')],
+            [sg.Input(key= 't_header_3', size=(8,1)), sg.Text('Tempo para atingir 4 Barras [hh:mm:ss]')],
+            [sg.Input(key= 't_header_4', size=(8,1)), sg.Text('Tempo para atingir 5 Barras [hh:mm:ss]')],
+            [sg.Input(key= 't_header_5', size=(8,1)), sg.Text('Tempo para atingir 6 Barras [hh:mm:ss]')],  
+            [sg.Button('Save'), sg.Cancel(button_text='Close')],
             ]    
 
-window = sg.Window('14585 Report Generator', layout, finalize= TRUE)
+window = sg.Window('14585 Report C04', layout, finalize= TRUE)
 
 while TRUE:
     event, values = window.read()
-    if (event == sg.WINDOW_CLOSED or event == 'Cancel') : 
+    if (event == sg.WINDOW_CLOSED or event == 'Close') : 
         break
     elif event == 'Save':
         file_in = values['file_in']
@@ -102,26 +101,6 @@ while TRUE:
         plt.savefig(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg', dpi = 600)
         plt.show()
 
-        # layout = [[sg.Input(key= 'zerar'), sg.Text('Truncar gráfico a partir de quantos segundos')],
-        # [sg.Button('Truncar'), sg.Cancel('Não truncar')]]
-        # window = sg.Window("Second Window", layout, modal=True)
-        # while True:
-        #     event, values = window.read()
-        #     if (event == sg.WIN_CLOSED or event == 'Não Truncar'):
-        #         break
-        #     elif event == 'Truncar':
-        if (values['-S-'] == True and event == 'Overwrite'):
-            zerar = int(values['zerar'])
-            df5 = df5.drop(range(zerar, int(df5.index[-1])+1))
-            df5.plot( grid = True, legend = False, figsize = (19.20,10.80))
-            plt.xlabel('tempo [s]', fontsize=22)
-            plt.ylabel('Bateria [%]', fontsize=22)
-            plt.suptitle(f'{file_out}'+" gráfico", fontsize= 26)
-            plt.savefig(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg', dpi = 600)
-            plt.show()            
-            window.close()
-        
-
         media = (round(df4["Tensão"].mean(), 5)) 
         minimo = (round(df4["Tensão"].min(), 5))
         maximo = (round(df4["Tensão"].max(), 5))
@@ -129,8 +108,10 @@ while TRUE:
         max_index_list = max_index.tolist()#create a list with every max voltage index
         t_carga = time.strftime('%H:%M:%S', time.gmtime(max_index_list[0]))#take the first time with the lowest voltage and convert to h:m:s format
 
-        if (values['-IN-'] == True):
+        flag = False
+        if (values['-IN-'] == TRUE):
             t_header =[]
+            flag = TRUE
             t_conv_list = []
             battery = []
             barras = int(values['barras'])  
@@ -145,12 +126,27 @@ while TRUE:
         else:
             comment = values['comment']#if not is possible to read the header battery % the user input a comment    
 
+
+        layout = [[sg.Input(key= 'zerar'), sg.Text('Truncar gráfico a partir de quantos segundos')],
+        [sg.Button('Truncar'), sg.Cancel('Não truncar')]]
+        window = sg.Window("Second Window", layout, modal=True)
+        while True:
+            event, values = window.read()
+            if (event == sg.WIN_CLOSED or event == 'Não Truncar'):
+                break
+            elif event == 'Truncar':
+                zerar = int(values['zerar'])
+                df5 = df5.drop(range(zerar, int(df5.index[-1])+1))
+                df5.plot( grid = True, legend = False, figsize = (19.20,10.80))
+                plt.xlabel('tempo [s]', fontsize=22)
+                plt.ylabel('Bateria [%]', fontsize=22)
+                plt.suptitle(f'{file_out}'+" gráfico", fontsize= 26)
+                plt.savefig(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg', dpi = 600)
+                plt.show()            
+                break
+            window.close()       
+
         saveAsPDF()
-
-        print("-"*50)
-        print(f"{file_out}.png foi salvo em Relatorios\imagens\n{file_out}.pdf foi salvo em Relatorios\pdf\n{file_out}.txt foi salvo em Relatorios"+'\\txt')
-        print("-"*25+"FIM"+"-"*25)
-
+        sg.popup(f"{file_out}.png foi salvo em Relatorios\imagens\n{file_out}.pdf foi salvo em Relatorios\pdf\n{file_out}.txt foi salvo em Relatorios"+'\\txt')
         text = {'Tensao média': media, 'Tensão miníma': minimo, 'Tensão máxima': maximo, 'Tempo de carregamento': t_carga}
-
         saveAstxt()

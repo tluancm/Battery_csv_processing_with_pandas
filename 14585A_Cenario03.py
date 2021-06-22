@@ -94,7 +94,7 @@ mean = []
 for k in range(0, 5):#localize the transaction times based on time index
     mean.append(df4.iloc[ti_m[k]:tf_m[k]+1,0].mean())
 mean2 = [round(n, 3) for n in mean ] #create a list with rounded values from variable mean
-mean_t = round(sts.mean(mean), 3)#create a variable with the transaction times mean
+mean_t = round(sts.mean(mean), 3)##create a variable with the currente mean on transaction
 
 df4.plot( grid = True, legend = False, figsize = (19.20,10.80))
 plt.xlabel('tempo [s]', fontsize=22)

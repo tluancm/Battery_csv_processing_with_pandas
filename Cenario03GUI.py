@@ -57,55 +57,55 @@ def saveAstxt():#open a txt file and write the results
 
     sg.theme('Reddit')  # please make your creations colorful
 
-layout = [  [sg.Text('Filename')],
-            [sg.Input(key = 'file_in'), sg.FileBrowse(initial_folder= 'C:\\Users\\VNTTAMA\\Desktop\\logs-csv')], 
+sg.theme('Reddit')
+
+layout = [  [sg.Text('CSV File')],
+            [sg.Input(key = 'file_in'), sg.FileBrowse(initial_folder= 'C:\\Users\\VNTTAMA\\Desktop\\logs-csv', file_types=(("CSV Files", ".*csv"),))], 
             [sg.Input(key = 'file_out'), sg.Text('File out')],
+            [sg.Checkbox('Modelo com impressão?', default= False, key= '-IN-')],
             
             [sg.Text('Transação 1')],
-            [sg.Input(key = 'ti_0'), sg.Text('Início [s]')],
-            [sg.Input(key = 'tf_0'), sg.Text('Fim [s]' )],
-            [sg.Input(key = 'imp1_0'), sg.Text('Corrente na 1ª via[mA]')],
-            [sg.Input(key = 'imp2_0'), sg.Text('Corrente na 2ª via [mA]')],
+            [sg.Input(key = 'ti_0', size=(3, 1)), sg.Text('Início [s]')],
+            [sg.Input(key = 'tf_0', size=(3, 1)), sg.Text('Fim [s]' )],
+            [sg.Input(key = 'imp1_0', size=(8, 1)), sg.Text('Corrente na 1ª via [mA]')],
+            [sg.Input(key = 'imp2_0', size=(8, 1)), sg.Text('Corrente na 2ª via [mA]')],
 
             [sg.Text('Transação 2')],
-            [sg.Input(key = 'ti_1'), sg.Text('Início [s]')],
-            [sg.Input(key = 'tf_1'), sg.Text('Fim [s]')],
-            [sg.Input(key = 'imp1_1'), sg.Text('Corrente na 1ª via[mA]')],
-            [sg.Input(key = 'imp2_1'), sg.Text('Corrente na 2ª via [mA]')],
+            [sg.Input(key = 'ti_1', size=(3, 1)), sg.Text('Início [s]')],
+            [sg.Input(key = 'tf_1', size=(3, 1)), sg.Text('Fim [s]')],
+            [sg.Input(key = 'imp1_1', size=(8, 1)), sg.Text('Corrente na 1ª via [mA]')],
+            [sg.Input(key = 'imp2_1', size=(8, 1)), sg.Text('Corrente na 2ª via [mA]')],
 
             [sg.Text('Transação 3')],
-            [sg.Input(key = 'ti_2'), sg.Text('Início [s]')],
-            [sg.Input(key = 'tf_2'), sg.Text('Fim [s]')],
-            [sg.Input(key = 'imp1_2'), sg.Text('Corrente na 1ª via[mA]')],
-            [sg.Input(key = 'imp2_2'), sg.Text('Corrente na 2ª via [mA]')],
+            [sg.Input(key = 'ti_2', size=(3, 1)), sg.Text('Início [s]')],
+            [sg.Input(key = 'tf_2', size=(3, 1)), sg.Text('Fim [s]')],
+            [sg.Input(key = 'imp1_2', size=(8, 1)), sg.Text('Corrente na 1ª via [mA]')],
+            [sg.Input(key = 'imp2_2', size=(8, 1)), sg.Text('Corrente na 2ª via [mA]')],
 
             [sg.Text('Transação 4')],
-            [sg.Input(key = 'ti_3'), sg.Text('Início [s]')],
-            [sg.Input(key = 'tf_3'), sg.Text('Fim [s]')],
-            [sg.Input(key = 'imp1_3'), sg.Text('Corrente na 1ª via[mA]')],
-            [sg.Input(key = 'imp2_3'), sg.Text('Corrente na 2ª via [mA]')],
+            [sg.Input(key = 'ti_3', size=(3, 1)), sg.Text('Início [s]')],
+            [sg.Input(key = 'tf_3', size=(3, 1)), sg.Text('Fim [s]')],
+            [sg.Input(key = 'imp1_3', size=(8, 1)), sg.Text('Corrente na 1ª via [mA]')],
+            [sg.Input(key = 'imp2_3', size=(8, 1)), sg.Text('Corrente na 2ª via [mA]')],
 
             [sg.Text('Transação 5')],
-            [sg.Input(key = 'ti_4'), sg.Text('Início [s]')],
-            [sg.Input(key = 'tf_4'), sg.Text('Fim [s]')],
-            [sg.Input(key = 'imp1_4'), sg.Text('Corrente na 1ª via[mA]')],
-            [sg.Input(key = 'imp2_4'), sg.Text('Corrente na 2ª via [mA]')],
+            [sg.Input(key = 'ti_4', size=(3, 1)), sg.Text('Início [s]')],
+            [sg.Input(key = 'tf_4', size=(3, 1)), sg.Text('Fim [s]')],
+            [sg.Input(key = 'imp1_4', size=(8, 1)), sg.Text('Corrente na 1ª via [mA]')],
+            [sg.Input(key = 'imp2_4', size=(8, 1)), sg.Text('Corrente na 2ª via [mA]')],
 
-            [sg.Checkbox('Modelo com impressão?', default= False, key= '-IN-')],
-            [sg.Button('Save'), sg.Cancel()]] 
+            [sg.Button('Save'), sg.Cancel(button_text='Close')]] 
 
 
-window = sg.Window('14585 Report Generator', layout, finalize= TRUE)
+window = sg.Window('14585 Report C03', layout, finalize= TRUE)
 
 while TRUE:
     event, values = window.read()
-    if (event == sg.WINDOW_CLOSED or event == 'Cancel') : 
+    if (event == sg.WINDOW_CLOSED or event == 'Close') : 
         break
     elif event == 'Save':
         file_in = values['file_in']
         file_out = values['file_out']
-        
-
         ti =[]
         tf = []
         dt = []
@@ -165,10 +165,7 @@ while TRUE:
 
         saveAsPDF()
 
-        print("-"*50)
-        print(f"{file_out}.png foi salvo em Relatorios\imagens\n{file_out}.pdf foi salvo em Relatorios\pdf\n{file_out}.txt foi salvo em Relatorios"+'\\txt')
-        print("-"*25+"FIM"+"-"*25)
-
+        sg.popup(f"{file_out}.png foi salvo em Relatorios\imagens\n{file_out}.pdf foi salvo em Relatorios\pdf\n{file_out}.txt foi salvo em Relatorios"+'\\txt')       
         text = {'Corrente média': media, 'Corrente minima': minimo, 'Corrente máxima': maximo, 
         'Duração transação 1':dt[0], 'Duração transação 2':dt[1], 'Duração transação 3':dt[2], 'Duração transação 4':dt[3], 'Duração transação 5':dt[4],
         'Corrente media transação 1': mean2[0], 'Corrente media transação 2': mean2[1],'Corrente media transação 3': mean2[2],
@@ -177,7 +174,5 @@ while TRUE:
         'Corrente 1ª via #5': imp1[4], 'Média da corrente de 1ª via': mean_imp1, 'Corrente 2ª via 1': imp2[0], 'Corrente 2ª via #2': imp2[1],  
         'Corrente 2ª via #3': imp2[2],'Corrente 2ª via #4': imp2[3],  'Corrente 2ª via #5': imp2[4], 'Média da corrente de 2ª via': mean_imp2
         }
-
         saveAstxt()
-        break
 window.close()    

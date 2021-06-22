@@ -34,17 +34,17 @@ def saveAstxt():#open a txt file and write the results
 
 sg.theme('Reddit')  # please make your creations colorful
 
-layout = [  [sg.Text('Filename')],
-            [sg.Input(key = 'file_in'), sg.FileBrowse(initial_folder= 'C:\\Users\\VNTTAMA\\Desktop\\logs-csv')], 
+layout = [  [sg.Text('CSV File')],
+            [sg.Input(key = 'file_in'), sg.FileBrowse(initial_folder= 'C:\\Users\\VNTTAMA\\Desktop\\logs-csv', file_types=(("CSV Files", ".*csv"),))], 
             [sg.Input(key = 'file_out'), sg.Text('File out')],
-            [sg.Button('Save'), sg.Cancel()]] 
+            [sg.Button('Save'), sg.Cancel(button_text='Close')]] 
 
 
-window = sg.Window('14585 Report Generator', layout, finalize= TRUE)
+window = sg.Window('14585 Report C01-02', layout, finalize= TRUE)
 
 while TRUE:
     event, values = window.read()
-    if (event == sg.WINDOW_CLOSED or event == 'Cancel') : 
+    if (event == sg.WINDOW_CLOSED or event == 'Close') : 
         break
     elif event == 'Save':
         file_in = values['file_in']
@@ -68,12 +68,7 @@ while TRUE:
 
         saveAsPDF()
 
-        print("-"*60)
-        print(f"{file_out}.png foi salvo em Relatorios\imagens\n{file_out}.pdf foi salvo em Relatorios\pdf\n{file_out}.txt foi salvo em Relatorios"+'\\txt')
-        print("-"*30+"FIM"+"-"*30)
-
         text = {'Corrente média': media, 'Corrente minima': minimo, 'Corrente máxima': maximo}
         saveAstxt()
         sg.popup(f"{file_out}.png foi salvo em Relatorios\imagens\n{file_out}.pdf foi salvo em Relatorios\pdf\n{file_out}.txt foi salvo em Relatorios"+'\\txt')
-        break
 window.close()        
