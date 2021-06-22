@@ -46,13 +46,12 @@ def saveAsPDF():#print output as pdf file
             pdf.cell(w = col_widht2, h= 6,align = 'C', border=1, txt= f'{t_header[k]}')
             pdf.cell(w = col_widht2, h=6,align = 'C', border= 1, ln=1, txt= f'{battery[k]}')
     else:
-        pdf.multi_cell(w = 0, border= 1, txt= f'{comment}') 
-    pdf.image(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg',x = -10, y = 100, w =225, h = 150)
-    pdf.output(f"C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\pdf\\{file_out}.pdf",'F')
+        pdf.multi_cell(w = 0,h=5, border= 1, txt= f'{comment}') 
+    pdf.image(f'Relatórios\\{file_out}.jpg',x = -10, y = 100, w =225, h = 150)
+    pdf.output(f"Relatórios\\{file_out}.pdf",'F')
 
 def saveAstxt():#open a txt file and write the results
-    os.chdir(r'C:\Users\VNTTAMA\Desktop\Relatorios\txt')#create directory
-    sys.stdout = open(f"{file_out}.txt", 'wt')#open file to write
+    sys.stdout = open(f"Relatórios\\{file_out}.txt", 'wt')#open file to write
     print(text)
     sys.stdout.close()
 
@@ -82,6 +81,8 @@ while TRUE:
     if (event == sg.WINDOW_CLOSED or event == 'Close') : 
         break
     elif event == 'Save':
+        if not os.path.exists('Relatórios'):
+            os.mkdir(r'Relatórios')#create directory
         file_in = values['file_in']
         file_out = values['file_out']
         df = pd.read_csv(file_in,skiprows=(3))#convert csv to dataframe
@@ -96,7 +97,7 @@ while TRUE:
         plt.xlabel('tempo [s]', fontsize=22)
         plt.ylabel('Bateria [%]', fontsize=22)
         plt.suptitle(f'{file_out}'+" gráfico", fontsize= 26)
-        plt.savefig(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg', dpi = 600)
+        plt.savefig(f'Relatórios\\{file_out}.jpg', dpi = 600)
         plt.show()
 
         media = (round(df4["Tensão"].mean(), 5)) 
@@ -139,12 +140,12 @@ while TRUE:
                 plt.xlabel('tempo [s]', fontsize=22)
                 plt.ylabel('Bateria [%]', fontsize=22)
                 plt.suptitle(f'{file_out}'+" gráfico", fontsize= 26)
-                plt.savefig(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg', dpi = 600)
+                plt.savefig(f'Relatórios\\{file_out}.jpg', dpi = 600)
                 plt.show()            
                 break
             window.close()  
 
         saveAsPDF()   
-        sg.popup(f"{file_out}.png foi salvo em Relatorios\imagens\n{file_out}.pdf foi salvo em Relatorios\pdf\n{file_out}.txt foi salvo em Relatorios"+'\\txt')
+        sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.png\n{file_out}.pdf\n{file_out}.txt")
         text = {'Tensao média': media, 'Tensão miníma': minimo, 'Tensão máxima': maximo, 'Tempo de carregamento': t_descarga}
         saveAstxt()
