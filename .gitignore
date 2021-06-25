@@ -10,7 +10,12 @@ build
 dist
 __pycache__
 pycache
+<<<<<<< HEAD
 .spec
 Relatórios
 .pyc
 .vscode
+=======
+*.spec
+Relatórios
+>>>>>>> 1779d4a7a498e5a9677c3844dab5c834ed2eec2d
