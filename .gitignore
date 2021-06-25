@@ -1,8 +1,16 @@
 *.csv
 *.pdf
+*.spec
 imagens
 pdf
 txt
 teste.py
 .vscode
 build
+dist
+__pycache__
+pycache
+.spec
+Relatórios
+.pyc
+.vscode
