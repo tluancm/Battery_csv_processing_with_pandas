@@ -6,11 +6,8 @@ pdf
 txt
 teste.py
 .vscode
-build
-dist
 __pycache__
-pycache
-*.ico
+
 
 <<<<<<< HEAD
 .spec
