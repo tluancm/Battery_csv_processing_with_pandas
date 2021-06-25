@@ -1,5 +1,6 @@
 *.csv
 *.pdf
+*.spec
 imagens
 pdf
 txt
@@ -9,5 +10,7 @@ build
 dist
 __pycache__
 pycache
-*.spec
+.spec
 Relatórios
+.pyc
+.vscode
