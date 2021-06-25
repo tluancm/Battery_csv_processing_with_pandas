@@ -1,1 +1,0 @@
-{'Tensao média': 7.53531, 'Tensão miníma': 7.06843, 'Tensão máxima': 8.15223, 'Tempo de carregamento': '16:29:11'}
