@@ -46,12 +46,11 @@ def saveAsPDF():#print output as pdf file
     pdf.cell(w = col_widht2, h= 6, border = 1, align= 'C', txt= 'Média')    
     pdf.cell(w = col_widht2, h= 6,border= 1, align= 'C', txt= f'{mean_imp1}' )
     pdf.cell(w = col_widht2, h= 6,border= 1, align= 'C', txt= f'{mean_imp2}' )
-    pdf.image(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg',x = -10, y = 125, w =225, h = 150)
-    pdf.output(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\pdf\\{file_out}.pdf','F')
+    pdf.image(f'Relatórios\\{file_out}.jpg',x = -10, y = 125, w =225, h = 150)
+    pdf.output(f'Relatórios\\{file_out}.pdf','F')
 
 def saveAstxt():#open a txt file and write the results
-    os.chdir(r'C:\Users\VNTTAMA\Desktop\Relatorios\txt')#create directory
-    sys.stdout = open(f"{file_out}.txt", 'wt')#open file to write
+    sys.stdout = open(f"Relatórios\\{file_out}.txt", 'wt')#open file to write
     print(text)
     sys.stdout.close()
 
@@ -60,7 +59,7 @@ def saveAstxt():#open a txt file and write the results
 sg.theme('Reddit')
 
 layout = [  [sg.Text('CSV File')],
-            [sg.Input(key = 'file_in'), sg.FileBrowse(initial_folder= 'C:\\Users\\VNTTAMA\\Desktop\\logs-csv', file_types=(("CSV Files", ".*csv"),))], 
+            [sg.Input(key = 'file_in'), sg.FileBrowse(file_types=(("CSV Files", ".*csv"),))], 
             [sg.Input(key = 'file_out'), sg.Text('File out')],
             [sg.Checkbox('Modelo com impressão?', default= False, key= '-IN-')],
             
@@ -104,6 +103,8 @@ while TRUE:
     if (event == sg.WINDOW_CLOSED or event == 'Close') : 
         break
     elif event == 'Save':
+        if not os.path.exists('Relatórios'):
+            os.mkdir(r'Relatórios')#create directory
         file_in = values['file_in']
         file_out = values['file_out']
         ti =[]
@@ -156,7 +157,7 @@ while TRUE:
         plt.xlabel('tempo [s]', fontsize=22)
         plt.ylabel('Corrente [mA]', fontsize=22)
         plt.suptitle(f'{file_out}'+" gráfico", fontsize= 26)
-        plt.savefig(f'C:\\Users\\VNTTAMA\\Desktop\\Relatorios\\imagens\\{file_out}.jpg', dpi = 600)
+        plt.savefig(f'Relatórios\\{file_out}.jpg', dpi = 600)
 
         df4["Corrente"] = df4["Corrente"].multiply(1/1000)#variables will be presented as Ampere unity
         media = (round(df4["Corrente"].mean(), 5))
@@ -165,7 +166,7 @@ while TRUE:
 
         saveAsPDF()
 
-        sg.popup(f"{file_out}.png foi salvo em Relatorios\imagens\n{file_out}.pdf foi salvo em Relatorios\pdf\n{file_out}.txt foi salvo em Relatorios"+'\\txt')       
+        sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.png\n{file_out}.pdf\n{file_out}.txt")       
         text = {'Corrente média': media, 'Corrente minima': minimo, 'Corrente máxima': maximo, 
         'Duração transação 1':dt[0], 'Duração transação 2':dt[1], 'Duração transação 3':dt[2], 'Duração transação 4':dt[3], 'Duração transação 5':dt[4],
         'Corrente media transação 1': mean2[0], 'Corrente media transação 2': mean2[1],'Corrente media transação 3': mean2[2],

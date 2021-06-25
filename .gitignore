@@ -6,3 +6,8 @@ txt
 teste.py
 .vscode
 build
+dist
+__pycache__
+pycache
+*.spec
+Relatórios
