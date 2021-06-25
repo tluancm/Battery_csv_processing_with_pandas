@@ -7,7 +7,7 @@ teste.py
 .vscode
 build
 dist
-.spec
 __pycache__
 pycache
 *.spec
+Relatórios
