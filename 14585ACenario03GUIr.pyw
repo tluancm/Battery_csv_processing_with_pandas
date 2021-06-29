@@ -141,7 +141,7 @@ while TRUE:
 
         df = pd.read_csv(file_in,skiprows=(3))#convert csv to dataframe
         df['Time'] = df['Time'].round(decimals = 1)
-        df2 = df.rename(columns = {'Active Instrument A Channel 3 Current Avg': "Corrente"}, inplace= False)#rename the column "Corrente"
+        df2 = df.rename(columns = {df.columns[2]: "Corrente"}, inplace= False)#rename the column "Corrente"
         df3 = df2.set_index('Time')#create df3 with index seted as "Time" column from df2
         df3["Corrente"] = df3["Corrente"].multiply(1000)
         df4 = pd.DataFrame(df3, columns = ["Corrente"])#create a subdataframe df4 with column "Corrente" from df3

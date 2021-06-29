@@ -88,7 +88,7 @@ while TRUE:
 
         df = pd.read_csv(file_in,skiprows=(3))#convert csv to dataframe
         df['Time'] = df['Time'].round(decimals = 1)
-        df2 = df.rename(columns = {'File1 Instrument A Channel 1 Voltage Avg': "Tensão"}, inplace= False)#create df2 with df renamed columns
+        df2 = df.rename(columns = {df.columns[1]: "Tensão"}, inplace= False)#create df2 with df renamed columns
         df3 = df2.set_index('Time')#create df3 with df2 time columns as index
         df4 = pd.DataFrame(df3, columns = ["Tensão"])#create a df4 subdataframe with df3 columns "Tensão"
 
