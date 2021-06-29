@@ -3,3 +3,11 @@
 imagens
 pdf
 txt
+*.csv
+*.spec
+*.jpg
+dist
+__pycache__
+.vscode
+
+
