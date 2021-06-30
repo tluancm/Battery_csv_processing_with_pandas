@@ -8,13 +8,14 @@ from charge_param import cenario4
 import pandas as pd
 from charge_param import graph
 from discharge_param import cenario5
+from discharge_param import graph2
 
 sg.theme('Reddit')  # please make your creations colorful
 
 layout = [  [sg.Text('Consumo')],
             [sg.Input(key = 'file_in_1'), sg.FileBrowse( file_types=(("CSV Files", ".*csv"),))],
             [sg.Input(key = 'file_out_1'), sg.Text('Output')],
-            [sg.Button(button_text='Save', key='consumo')],
+            [sg.Button(button_text='Save', key='consumo')], 
 
             [sg.Text('Transação')],
             [sg.Input(key="file_in_2"),sg.FileBrowse()], 
@@ -170,8 +171,7 @@ while TRUE:
                         break
                     elif event6 == 'Truncar':
                         zerar = int(values6['zerar'])
-                        print(df6)
-                        graph(file_out,df6, zerar)   
+                        graph2(file_out,df6, zerar)   
                         break
                 window6.close()  
         window5.close()

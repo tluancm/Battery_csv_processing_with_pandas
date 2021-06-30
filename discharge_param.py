@@ -56,7 +56,7 @@ def saveAstxt5(file_out, text):#open a txt file and write the results
 
 def cenario5(file_in, file_out, values5):
     df = pd.read_csv(file_in,skiprows=(3))#convert csv to dataframe
-    df['Time'] = df['Time'].round(decimals = 1)
+    df['Time'] = df['Time'].round(decimals = 0)
     df2 = df.rename(columns = {df.columns[1]: "Tensão"}, inplace= False)#create df2 with df renamed column
     df3 = df2.set_index('Time')#create df3 with index as df2 column
     df4 = pd.DataFrame(df3, columns = ["Tensão"])#create a subdf df4 with column "Tensão" from df3
@@ -70,7 +70,7 @@ def cenario5(file_in, file_out, values5):
     plt.suptitle(f'{file_out}'+" gráfico", fontsize= 26)
     plt.savefig(f'Relatórios\\{file_out}.jpg', dpi = 600)
     plt.show()
-
+    
     media = (round(df4["Tensão"].mean(), 5)) 
     minimo = (round(df4["Tensão"].min(), 5))
     maximo = (round(df4["Tensão"].max(), 5))
@@ -105,8 +105,7 @@ def cenario5(file_in, file_out, values5):
     saveAstxt5(file_out, text)    
     return df5
 
-def graph(file_out,df6, zerar):
-    print(df6)
+def graph2(file_out,df6, zerar):
     df6 = df6.drop(range(zerar, int(df6.index[-1])+1))
     df6.plot( grid = True, legend = False, figsize = (19.20,10.80))
     plt.xlabel('tempo [s]', fontsize=22)

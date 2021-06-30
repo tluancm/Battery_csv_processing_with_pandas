@@ -56,14 +56,14 @@ def saveAstxt4(file_out, text):#open a txt file and write the results
 
 def cenario4(file_in, file_out,values3):
     df = pd.read_csv(file_in,skiprows=(3))#convert csv to dataframe
-    df['Time'] = df['Time'].round(decimals = 1)
+    df['Time'] = df['Time'].round(decimals = 0)
     df2 = df.rename(columns = {df.columns[1]: "Tensão"}, inplace= False)#create df2 with df renamed columns
     df3 = df2.set_index('Time')#create df3 with df2 time columns as index
     df4 = pd.DataFrame(df3, columns = ["Tensão"])#create a df4 subdataframe with df3 columns "Tensão"
 
     df4['Bateria[%]'] = (df4["Tensão"]-df4["Tensão"].min())*100/(df4["Tensão"].max()-df4["Tensão"].min())#calculate the battery %charge
     df5 = pd.DataFrame(df4, columns = ['Bateria[%]'])#create a subdataframe df5 with df4 "Bateria [%]" column
-
+    
     df5.plot( grid = True, legend = False, figsize = (19.20,10.80))
     plt.xlabel('tempo [s]', fontsize=22)
     plt.ylabel('Bateria [%]', fontsize=22)
@@ -102,7 +102,7 @@ def cenario4(file_in, file_out,values3):
     saveAsPDF4(file_out, media, minimo, maximo, t_carga, flag, barras, t_conv_list, t_header, battery,comment)
     sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.png\n{file_out}.pdf\n{file_out}.txt")
     text = {'Tensao média': media, 'Tensão miníma': minimo, 'Tensão máxima': maximo, 'Tempo de carregamento': t_carga}
-    saveAstxt4(file_out, text)    
+    saveAstxt4(file_out, text)   
     return df5
 
 
