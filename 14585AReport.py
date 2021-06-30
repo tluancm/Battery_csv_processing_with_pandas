@@ -170,6 +170,7 @@ while TRUE:
                         break
                     elif event6 == 'Truncar':
                         zerar = int(values6['zerar'])
+                        print(df6)
                         graph(file_out,df6, zerar)   
                         break
                 window6.close()  
