@@ -48,6 +48,7 @@ while TRUE:
         file_out = values['file_out_1']
         cenario1_2(file_in, file_out) 
         sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.png\n{file_out}.pdf\n{file_out}.txt")
+
     elif event == 'trans':
         sg.theme('Reddit')
         layout = [[sg.Checkbox('Modelo com impressão?', default= False, key= '-IN-')],
@@ -94,6 +95,7 @@ while TRUE:
                 file_in = values['file_in_2']
                 file_out = values['file_out_2']
                 cenario3(file_in, file_out, values2)
+                sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.png\n{file_out}.pdf\n{file_out}.txt")
         window2.close()    
 
     elif event == 'carga':
@@ -134,6 +136,7 @@ while TRUE:
                         zerar = int(values4['zerar'])
                         graph(file_out,df6, zerar)   
                         break
+                    sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.png\n{file_out}.pdf\n{file_out}.txt")
                 window4.close()  
         window3.close()
 
@@ -173,6 +176,7 @@ while TRUE:
                         zerar = int(values6['zerar'])
                         graph2(file_out,df6, zerar)   
                         break
+                    sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.png\n{file_out}.pdf\n{file_out}.txt")
                 window6.close()  
         window5.close()
 

@@ -100,7 +100,6 @@ def cenario4(file_in, file_out,values3):
         barras = 0
     
     saveAsPDF4(file_out, media, minimo, maximo, t_carga, flag, barras, t_conv_list, t_header, battery,comment)
-    sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.png\n{file_out}.pdf\n{file_out}.txt")
     text = {'Tensao média': media, 'Tensão miníma': minimo, 'Tensão máxima': maximo, 'Tempo de carregamento': t_carga}
     saveAstxt4(file_out, text)   
     return df5
