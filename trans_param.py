@@ -1,10 +1,7 @@
-from tkinter.constants import TRUE
 import pandas as pd
 import matplotlib.pyplot as plt
 import sys
 from fpdf import FPDF
-import PySimpleGUI as sg      
-import os
 import statistics as sts#can operate easily on lists
 
 def saveAsPDF3(file_out, ti,tf,dt,mean2,dt_mean,mean_t,imp1,imp2,mean_imp1,mean_imp2):#print output as pdf file

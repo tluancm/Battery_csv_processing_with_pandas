@@ -3,8 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import sys
 from fpdf import FPDF
-import PySimpleGUI as sg      
-import statistics as sts#can operate easily on lists
 import time
 
 def saveAsPDF4(file_out, media, minimo, maximo, t_carga, flag, barras, t_conv_list, t_header, battery,comment):#print output as pdf file

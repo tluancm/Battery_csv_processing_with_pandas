@@ -5,7 +5,6 @@ import os# provid way to interact with the OS
 from consume_param import cenario1_2
 from trans_param import cenario3
 from charge_param import cenario4
-import pandas as pd
 from charge_param import graph
 from discharge_param import cenario5
 from discharge_param import graph2
@@ -14,33 +13,33 @@ import trans_param
 import charge_param
 import discharge_param
 
-sg.theme('Reddit')  # please make your creations colorful
+sg.theme('TanBlue')  # please make your creations colorful
 
-layout = [  [sg.Text('Consumo')],
-            [sg.Input(key = 'file_in_1'), sg.FileBrowse( file_types=(("CSV Files", ".*csv"),))],
-            [sg.Input(key = 'file_out_1'), sg.Text('Output')],
-            [sg.Button(button_text='Save', key='consumo')], 
+layout = [  [sg.Text('Parâmetros de Consumo:')],
+            [sg.Input(key = 'file_in_1', size=(60,1)), sg.FileBrowse( file_types=(("CSV Files", ".*csv"),), size=(8,1))],
+            [sg.Input(key = 'file_out_1', size=(60,1)), sg.Text('Output')],
+            [sg.Button(button_text='Save', key='consumo', size=(8,1))], 
 
-            [sg.Text('Transação')],
-            [sg.Input(key="file_in_2"),sg.FileBrowse()], 
-            [sg.Input(key = 'file_out_2'), sg.Text('Output')],
-            [sg.Button(button_text='Save...', key='trans')],
+            [sg.Text('Parâmetros de Transação:')],
+            [sg.Input(key="file_in_2", size=(60,1)),sg.FileBrowse(file_types=(("CSV Files", ".*csv"),), size=(8,1))], 
+            [sg.Input(key = 'file_out_2', size=(60,1)), sg.Text('Output')],
+            [sg.Button(button_text='Save...', key='trans', size=(8,1))],
 
-            [sg.Text('Carregamento:')],
-            [sg.Input(key="file_in_3"),sg.FileBrowse()], 
-            [sg.Input(key = 'file_out_3'), sg.Text('Output')],
-            [sg.Button(button_text='Save...', key='carga')],
+            [sg.Text('Parâmetros de Carregamento:')],
+            [sg.Input(key="file_in_3", size=(60,1)),sg.FileBrowse(file_types=(("CSV Files", ".*csv"),), size=(8,1))], 
+            [sg.Input(key = 'file_out_3', size=(60,1)), sg.Text('Output')],
+            [sg.Button(button_text='Save...', key='carga', size=(8,1))],
 
-            [sg.Text('Descarregamento:')],
-            [sg.Input(key="file_in_4"),sg.FileBrowse()], 
-            [sg.Input(key = 'file_out_4'), sg.Text('Output')],
-            [sg.Button(button_text='Save...', key='descarga')],
+            [sg.Text('Parâmetros de Descarregamento:')],
+            [sg.Input(key="file_in_4", size=(60,1)),sg.FileBrowse(file_types=(("CSV Files", ".*csv"),), size=(8,1))], 
+            [sg.Input(key = 'file_out_4', size=(60,1)), sg.Text('Output')],
+            [sg.Button(button_text='Save...', key='descarga', size=(8,1))],
 
-            [sg.Cancel(button_text='Close')]
+            [sg.Cancel(button_text='Close', size=(8,1))]
             ]    
 
 
-window = sg.Window('14585 Report', layout, finalize= TRUE, location=(0,0), size=(550, 550))
+window = sg.Window('14585 Report', layout, finalize= TRUE, location=(500,150), size=(550, 530))
 if not os.path.exists('Relatórios'):
             os.mkdir(r'Relatórios')#create directory
 while TRUE:
@@ -55,7 +54,7 @@ while TRUE:
         sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.png\n{file_out}.pdf\n{file_out}.txt")
 
     elif event == 'trans':
-        sg.theme('Reddit')
+        sg.theme('TanBlue')
         layout = [[sg.Checkbox('Modelo com impressão?', default= False, key= '-IN-')],
             
             [sg.Text('Transação 1')],
@@ -105,7 +104,7 @@ while TRUE:
         window2.close()    
 
     elif event == 'carga':
-        sg.theme('Reddit')
+        sg.theme('TanBlue')
         layout = [[sg.Checkbox('É possível obter a carga pelo header?', key= '-IN-')],
             [sg.Text('Comentário')],
             [sg.Multiline(key= 'comment', size=(50,5), default_text='Comente caso não seja possível.')],
@@ -149,7 +148,7 @@ while TRUE:
         window3.close()
 
     elif event == 'descarga':
-        sg.theme('Reddit')
+        sg.theme('TanBlue')
         layout = [[sg.Checkbox('É possível obter a carga pelo header?', key= '-IN-')],
             [sg.Text('Comentário')],
             [sg.Multiline(key= 'comment', size=(50,5), default_text='Comente caso não seja possível.')],
