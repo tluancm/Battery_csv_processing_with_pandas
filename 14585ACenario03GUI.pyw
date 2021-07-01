@@ -54,7 +54,6 @@ def saveAstxt():#open a txt file and write the results
     print(text)
     sys.stdout.close()
 
-    sg.theme('Reddit')  # please make your creations colorful
 
 sg.theme('Reddit')
 

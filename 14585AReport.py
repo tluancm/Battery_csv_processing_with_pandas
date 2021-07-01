@@ -9,6 +9,10 @@ import pandas as pd
 from charge_param import graph
 from discharge_param import cenario5
 from discharge_param import graph2
+import consume_param
+import trans_param
+import charge_param
+import discharge_param
 
 sg.theme('Reddit')  # please make your creations colorful
 
@@ -46,7 +50,8 @@ while TRUE:
     elif event == 'consumo':
         file_in = values['file_in_1']
         file_out = values['file_out_1']
-        cenario1_2(file_in, file_out) 
+        t1 = cenario1_2(file_in, file_out)
+        consume_param.saveAsPDF1(file_out, t1[0], t1[1], t1[2])
         sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.png\n{file_out}.pdf\n{file_out}.txt")
 
     elif event == 'trans':
@@ -94,7 +99,8 @@ while TRUE:
             elif event2 == 'Save':
                 file_in = values['file_in_2']
                 file_out = values['file_out_2']
-                cenario3(file_in, file_out, values2)
+                t1 = cenario3(file_in, file_out, values2)
+                trans_param.saveAsPDF3(file_out,t1[0],t1[1],t1[2],t1[3],t1[4],t1[5],t1[6],t1[7],t1[8],t1[9])
                 sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.png\n{file_out}.pdf\n{file_out}.txt")
         window2.close()    
 
@@ -124,7 +130,7 @@ while TRUE:
             elif event3 == 'Save':
                 file_in = values['file_in_3']
                 file_out = values['file_out_3']
-                df6 = cenario4(file_in,file_out,values3)                             
+                t1 = cenario4(file_in,file_out,values3)                             
                 layout = [[sg.Input(key= 'zerar'), sg.Text('Truncar gráfico a partir de quantos segundos')],
                 [sg.Button('Truncar'), sg.Cancel('Não truncar')]]
                 window4 = sg.Window("Graph", layout, modal=True)
@@ -133,10 +139,12 @@ while TRUE:
                     if (event4 == sg.WIN_CLOSED or event4 == 'Não truncar'):
                         break
                     elif event4 == 'Truncar':
-                        zerar = int(values4['zerar'])
-                        graph(file_out,df6, zerar)   
+                        s = False
+                        zerar = int(values4['zerar'])   
                         break
-                    sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.png\n{file_out}.pdf\n{file_out}.txt")
+                graph(file_out,t1[0], zerar, s)    
+                charge_param.saveAsPDF4(file_out, t1[1], t1[2], t1[3], t1[4], t1[5], t1[6], t1[7], t1[8], t1[9],t1[10])
+                sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.png\n{file_out}.pdf\n{file_out}.txt")
                 window4.close()  
         window3.close()
 
@@ -164,7 +172,7 @@ while TRUE:
             elif event5 == 'Save':
                 file_in = values['file_in_4']
                 file_out = values['file_out_4']
-                df6 = cenario5(file_in,file_out,values5)                             
+                t1 = cenario5(file_in,file_out,values5)                             
                 layout = [[sg.Input(key= 'zerar'), sg.Text('Truncar gráfico a partir de quantos segundos')],
                 [sg.Button('Truncar'), sg.Cancel('Não truncar')]]
                 window6 = sg.Window("Graph", layout, modal=True)
@@ -173,10 +181,12 @@ while TRUE:
                     if (event6 == sg.WIN_CLOSED or event6 == 'Não truncar'):
                         break
                     elif event6 == 'Truncar':
-                        zerar = int(values6['zerar'])
-                        graph2(file_out,df6, zerar)   
+                        s = False
+                        zerar = int(values6['zerar'])  
                         break
-                    sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.png\n{file_out}.pdf\n{file_out}.txt")
+                graph2(file_out,t1[0], zerar, s)    
+                discharge_param.saveAsPDF5(file_out, t1[1], t1[2], t1[3], t1[4], t1[5], t1[6], t1[7], t1[8], t1[9],t1[10])        
+                sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.png\n{file_out}.pdf\n{file_out}.txt")
                 window6.close()  
         window5.close()
 

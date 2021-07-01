@@ -102,10 +102,12 @@ def cenario5(file_in, file_out, values5):
     saveAsPDF5(file_out, media, minimo, maximo, t_descarga, flag, barras, t_conv_list, t_header, battery, comment)   
     text = {'Tensao média': media, 'Tensão miníma': minimo, 'Tensão máxima': maximo, 'Tempo de carregamento': t_descarga}
     saveAstxt5(file_out, text)    
-    return df5
+    return df5, media, minimo, maximo, t_descarga, flag, barras, t_conv_list, t_header, battery,comment
 
-def graph2(file_out,df6, zerar):
-    df6 = df6.drop(range(zerar, int(df6.index[-1])+1))
+
+def graph2(file_out,df6, zerar, s= True):
+    if s == False:
+        df6 = df6.drop(range(zerar, int(df6.index[-1])+1))
     df6.plot( grid = True, legend = False, figsize = (19.20,10.80))
     plt.xlabel('tempo [s]', fontsize=22)
     plt.ylabel('Bateria [%]', fontsize=22)

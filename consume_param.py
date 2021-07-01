@@ -47,6 +47,7 @@ def cenario1_2(file_in,file_out):
     maximo = (round(df4["Corrente"].max(), 5))
 
     text = {'Corrente média': media, 'Corrente minima': minimo, 'Corrente máxima': maximo}
-    saveAsPDF1(file_out, media, minimo, maximo)
+    # saveAsPDF1(file_out, media, minimo, maximo)
     saveAstxt1(file_out, text)
+    return media, minimo, maximo
     
