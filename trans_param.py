@@ -7,7 +7,7 @@ import PySimpleGUI as sg
 import os
 import statistics as sts#can operate easily on lists
 
-def saveAsPDF3(ti,tf,dt,mean2,dt_mean,mean_t,imp1,imp2,mean_imp1,mean_imp2,file_out ):#print output as pdf file
+def saveAsPDF3(file_out, ti,tf,dt,mean2,dt_mean,mean_t,imp1,imp2,mean_imp1,mean_imp2):#print output as pdf file
     pdf = FPDF()
     pdf.add_page()
     epw = pdf.w -2*pdf.l_margin#widht of page minus 2x the margin, make possible to create cells with wide from margin to margin
@@ -113,9 +113,7 @@ def cenario3(file_in, file_out,values2):
     minimo = (round(df4["Corrente"].min(), 5))
     maximo = (round(df4["Corrente"].max(), 5))
 
-    saveAsPDF3(ti,tf,dt,mean2,dt_mean,mean_t,imp1,imp2,mean_imp1,mean_imp2,file_out )
-
-    sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.png\n{file_out}.pdf\n{file_out}.txt")       
+    # saveAsPDF3(ti,tf,dt,mean2,dt_mean,mean_t,imp1,imp2,mean_imp1,mean_imp2,file_out )       
     text = {'Corrente média': media, 'Corrente minima': minimo, 'Corrente máxima': maximo, 
             'Duração transação 1':dt[0], 'Duração transação 2':dt[1], 'Duração transação 3':dt[2], 'Duração transação 4':dt[3], 'Duração transação 5':dt[4],
             'Corrente media transação 1': mean2[0], 'Corrente media transação 2': mean2[1],'Corrente media transação 3': mean2[2],
@@ -125,4 +123,4 @@ def cenario3(file_in, file_out,values2):
             'Corrente 2ª via #3': imp2[2],'Corrente 2ª via #4': imp2[3],  'Corrente 2ª via #5': imp2[4], 'Média da corrente de 2ª via': mean_imp2
             }
     saveAstxt3(file_out, text)
-        
+    return ti,tf,dt,mean2,dt_mean,mean_t,imp1,imp2,mean_imp1,mean_imp2,file_out    
