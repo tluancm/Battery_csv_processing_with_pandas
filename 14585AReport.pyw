@@ -36,7 +36,7 @@ layout = [  [sg.Text('Consumo')],
             [sg.Input(key = 'file_out_4'), sg.Text('Output')],
             [sg.Button(button_text='Save...', key='descarga')],
 
-            [sg.Cancel(button_text='Cancel')]
+            [sg.Cancel(button_text='Close')]
             ]    
 
 
@@ -45,7 +45,7 @@ if not os.path.exists('Relatórios'):
             os.mkdir(r'Relatórios')#create directory
 while TRUE:
     event, values = window.read()
-    if (event == sg.WINDOW_CLOSED or event == 'Cancel') : 
+    if (event == sg.WINDOW_CLOSED or event == 'Close') : 
         break
     elif event == 'consumo':
         file_in = values['file_in_1']
