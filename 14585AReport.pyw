@@ -39,7 +39,7 @@ layout = [  [sg.Text('Parâmetros de Consumo:')],
             ]    
 
 
-window = sg.Window('14585 Report', layout, finalize= TRUE, location=(500,150), size=(550, 530))
+window = sg.Window('14585 Report', layout, finalize= TRUE, location=(500,150), size=(550, 530), icon="C:\\Users\\VNTTAMA\\Documents\\Projetos\\csv_data_analyze\\icone.ico")
 if not os.path.exists('Relatórios'):
             os.mkdir(r'Relatórios')#create directory
 while TRUE:
