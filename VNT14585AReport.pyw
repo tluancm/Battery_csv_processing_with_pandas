@@ -89,7 +89,7 @@ while TRUE:
 
             [sg.Button('Save'), sg.Cancel(button_text='Close')]] 
 
-        window2 = sg.Window('VNT 14585A Report Transaction Parameters', layout, finalize= TRUE)
+        window2 = sg.Window('VNT 14585A Report Transaction Parameters', layout, finalize= TRUE, modal=True)
 
         while TRUE:
             event2, values2 = window2.read()
@@ -120,7 +120,7 @@ while TRUE:
             [sg.Button('Save'), sg.Cancel(button_text='Close')],
             ]    
 
-        window3 = sg.Window('VNT 14585A Report Charge Parameters', layout, finalize= TRUE)
+        window3 = sg.Window('VNT 14585A Report Charge Parameters', layout, finalize= TRUE, modal=True)
 
         while TRUE:
             event3, values3 = window3.read()
@@ -163,7 +163,7 @@ while TRUE:
             [sg.Input(key= 't_header_0', size=(8,1)), sg.Text('Tempo para atingir 0 Barras [hh:mm:ss]')],  
             [sg.Button('Save'), sg.Cancel(button_text='Close')],
             ]    
-        window5 = sg.Window('VNT 14585A Report Discharge Parameters', layout, finalize= TRUE)
+        window5 = sg.Window('VNT 14585A Report Discharge Parameters', layout, finalize= TRUE, modal=True)
         while TRUE:
             event5, values5 = window5.read()
             if (event5 == sg.WINDOW_CLOSED or event5 == 'Close') : 
