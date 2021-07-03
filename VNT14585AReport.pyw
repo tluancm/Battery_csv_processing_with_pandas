@@ -13,7 +13,7 @@ import trans_param
 import charge_param
 import discharge_param
 
-sg.theme('TanBlue')  # please make your creations colorful
+sg.theme('DarkBlue7')  # please make your creations colorful
 
 layout = [  [sg.Text('Parâmetros de Consumo:')],
             [sg.Input(key = 'file_in_1', size=(60,1)), sg.FileBrowse( file_types=(("CSV Files", ".*csv"),), size=(8,1))],
@@ -39,7 +39,7 @@ layout = [  [sg.Text('Parâmetros de Consumo:')],
             ]    
 
 
-window = sg.Window('14585 Report', layout, finalize= TRUE, location=(500,150), size=(550, 530), icon="C:\\Users\\VNTTAMA\\Documents\\Projetos\\csv_data_analyze\\icone.ico")
+window = sg.Window('VNT 14585A Report', layout, finalize= TRUE, location=(500,150), size=(550, 530), icon="Assets\\vnt_icone.ico")
 if not os.path.exists('Relatórios'):
             os.mkdir(r'Relatórios')#create directory
 while TRUE:
@@ -54,7 +54,7 @@ while TRUE:
         sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.png\n{file_out}.pdf\n{file_out}.txt")
 
     elif event == 'trans':
-        sg.theme('TanBlue')
+        sg.theme('DarkBlue7')
         layout = [[sg.Checkbox('Modelo com impressão?', default= False, key= '-IN-')],
             
             [sg.Text('Transação 1')],
@@ -89,7 +89,7 @@ while TRUE:
 
             [sg.Button('Save'), sg.Cancel(button_text='Close')]] 
 
-        window2 = sg.Window('14585 Report C03', layout, finalize= TRUE)
+        window2 = sg.Window('VNT 14585A Report Transaction Parameters', layout, finalize= TRUE)
 
         while TRUE:
             event2, values2 = window2.read()
@@ -104,7 +104,7 @@ while TRUE:
         window2.close()    
 
     elif event == 'carga':
-        sg.theme('TanBlue')
+        sg.theme('DarkBlue7')
         layout = [[sg.Checkbox('É possível obter a carga pelo header?', key= '-IN-')],
             [sg.Text('Comentário')],
             [sg.Multiline(key= 'comment', size=(50,5), default_text='Comente caso não seja possível.')],
@@ -120,7 +120,7 @@ while TRUE:
             [sg.Button('Save'), sg.Cancel(button_text='Close')],
             ]    
 
-        window3 = sg.Window('14585 Report C04', layout, finalize= TRUE)
+        window3 = sg.Window('VNT 14585A Report Charge Parameters', layout, finalize= TRUE)
 
         while TRUE:
             event3, values3 = window3.read()
@@ -148,7 +148,7 @@ while TRUE:
         window3.close()
 
     elif event == 'descarga':
-        sg.theme('TanBlue')
+        sg.theme('DarkBlue7')
         layout = [[sg.Checkbox('É possível obter a carga pelo header?', key= '-IN-')],
             [sg.Text('Comentário')],
             [sg.Multiline(key= 'comment', size=(50,5), default_text='Comente caso não seja possível.')],
@@ -163,7 +163,7 @@ while TRUE:
             [sg.Input(key= 't_header_0', size=(8,1)), sg.Text('Tempo para atingir 0 Barras [hh:mm:ss]')],  
             [sg.Button('Save'), sg.Cancel(button_text='Close')],
             ]    
-        window5 = sg.Window('14585 Report C04', layout, finalize= TRUE)
+        window5 = sg.Window('VNT 14585A Report Discharge Parameters', layout, finalize= TRUE)
         while TRUE:
             event5, values5 = window5.read()
             if (event5 == sg.WINDOW_CLOSED or event5 == 'Close') : 
