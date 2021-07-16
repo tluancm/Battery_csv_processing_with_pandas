@@ -13,7 +13,7 @@ import trans_param
 import charge_param
 import discharge_param
 
-sg.theme('DarkBlue7')  # please make your creations colorful
+sg.theme('LightPurple')  # please make your creations colorful
 
 layout = [  [sg.Text('Parâmetros de Consumo:')],
             [sg.Input(key = 'file_in_1', size=(60,1)), sg.FileBrowse( file_types=(("CSV Files", ".*csv"),), size=(8,1))],
@@ -130,18 +130,17 @@ while TRUE:
                 file_in = values['file_in_3']
                 file_out = values['file_out_3']
                 t1 = cenario4(file_in,file_out,values3)                             
-                layout = [[sg.Input(key= 'zerar'), sg.Text('Truncar gráfico a partir de quantos segundos')],
-                [sg.Button('Truncar'), sg.Cancel('Não truncar')]]
+                layout = [[sg.Input(key= 'zerar'), sg.Text('Cut graph from how many seconds?')],
+                [sg.Button('Apply', key= 'apply'), sg.Cancel('Cancel', key= 'cancel')]]
                 window4 = sg.Window("Graph", layout, modal=True)
                 while True:
                     event4, values4 = window4.read()
-                    if (event4 == sg.WIN_CLOSED or event4 == 'Não truncar'):
+                    if (event4 == sg.WIN_CLOSED or event4 == 'cancel'):
                         break
-                    elif event4 == 'Truncar':
-                        s = False
+                    elif event4 == 'apply':
                         zerar = int(values4['zerar'])   
-                        break
-                graph(file_out,t1[0], zerar, s)    
+                        graph(file_out,t1[0], zerar)  
+                        break  
                 charge_param.saveAsPDF4(file_out, t1[1], t1[2], t1[3], t1[4], t1[5], t1[6], t1[7], t1[8], t1[9],t1[10])
                 sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.png\n{file_out}.pdf\n{file_out}.txt")
                 window4.close()  
@@ -172,18 +171,18 @@ while TRUE:
                 file_in = values['file_in_4']
                 file_out = values['file_out_4']
                 t1 = cenario5(file_in,file_out,values5)                             
-                layout = [[sg.Input(key= 'zerar'), sg.Text('Truncar gráfico a partir de quantos segundos')],
-                [sg.Button('Truncar'), sg.Cancel('Não truncar')]]
+                layout = [[sg.Input(key= 'zerar'), sg.Text('Cut graph from how many seconds?')],
+                [sg.Button('Apply', key= 'apply'), sg.Cancel('Cancel', key= 'cancel')]]
                 window6 = sg.Window("Graph", layout, modal=True)
                 while True:
                     event6, values6 = window6.read()
-                    if (event6 == sg.WIN_CLOSED or event6 == 'Não truncar'):
+                    if (event6 == sg.WIN_CLOSED or event6 == 'cancel'):
                         break
-                    elif event6 == 'Truncar':
+                    elif event6 == 'apply':
                         s = False
                         zerar = int(values6['zerar'])  
-                        break
-                graph2(file_out,t1[0], zerar, s)    
+                        graph2(file_out,t1[0], zerar) 
+                        break   
                 discharge_param.saveAsPDF5(file_out, t1[1], t1[2], t1[3], t1[4], t1[5], t1[6], t1[7], t1[8], t1[9],t1[10])        
                 sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.png\n{file_out}.pdf\n{file_out}.txt")
                 window6.close()  

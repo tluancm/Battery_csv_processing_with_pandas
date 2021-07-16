@@ -65,6 +65,7 @@ def cenario4(file_in, file_out,values3):
     plt.xlabel('tempo [s]', fontsize=22)
     plt.ylabel('Bateria [%]', fontsize=22)
     plt.suptitle(f'{file_out}'+" gráfico", fontsize= 26)
+    plt.savefig(f'Relatórios\\{file_out}.jpg', dpi = 600)
     plt.show()
 
     media = (round(df4["Tensão"].mean(), 5)) 
@@ -100,10 +101,9 @@ def cenario4(file_in, file_out,values3):
     return df5, media, minimo, maximo, t_carga, flag, barras, t_conv_list, t_header, battery,comment
 
 
-def graph(file_out,df6, zerar, s= True):
+def graph(file_out,df6, zerar):
 
-    if s == False:
-        df6 = df6.drop(range(zerar, int(df6.index[-1])+1))    
+    df6 = df6.drop(range(zerar, int(df6.index[-1])+1))    
     df6.plot( grid = True, legend = False, figsize = (19.20,10.80))
     plt.xlabel('tempo [s]', fontsize=22)
     plt.ylabel('Bateria [%]', fontsize=22)
