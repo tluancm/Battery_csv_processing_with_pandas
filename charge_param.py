@@ -25,7 +25,6 @@ def saveAsPDF4(file_out, media, minimo, maximo, t_carga, flag, barras, t_conv_li
     pdf.cell(w= cold_widht+18, h= 6,align = 'C', border= 1, ln=1,txt= f'{t_carga}' )
 
     pdf.cell(w = 0, h= 6,border= 0,align = 'C', ln= 1, txt='' )
-    #cold_widht2 = epw/3
     cold_widht2 = epw/4
     pdf.cell(w= cold_widht2, h= 6,align = 'C', border= 1,txt= ' ' )
     pdf.cell(w= 2*cold_widht2, h= 6,align = 'C', border= 1,txt= 'Tempo' )
@@ -66,7 +65,6 @@ def cenario4(file_in, file_out,values3):
     plt.xlabel('tempo [s]', fontsize=22)
     plt.ylabel('Bateria [%]', fontsize=22)
     plt.suptitle(f'{file_out}'+" gráfico", fontsize= 26)
-    # plt.savefig(f'Relatórios\\{file_out}.jpg', dpi = 600)
     plt.show()
 
     media = (round(df4["Tensão"].mean(), 5)) 
@@ -97,7 +95,6 @@ def cenario4(file_in, file_out,values3):
         comment = values3['comment']#if not is possible to read the header battery % the user input a comment    
         barras = 0
     
-    # saveAsPDF4(file_out, media, minimo, maximo, t_carga, flag, barras, t_conv_list, t_header, battery,comment)
     text = {'Tensao média': media, 'Tensão miníma': minimo, 'Tensão máxima': maximo, 'Tempo de carregamento': t_carga}
     saveAstxt4(file_out, text)   
     return df5, media, minimo, maximo, t_carga, flag, barras, t_conv_list, t_header, battery,comment
