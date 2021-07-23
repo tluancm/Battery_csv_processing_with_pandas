@@ -17,12 +17,12 @@ import charge_param
 import discharge_param
 import webbrowser
 
-sg.theme('LightPurple')  # please make your creations colorful
+sg.theme('DarkBlue')  # please make your creations colorful
 
 layout = [  [sg.Text('Consumption Test:')],
             [sg.Input(key = 'file_in_1', size=(60,1)), sg.FileBrowse( file_types=(("CSV Files", ".*csv"),), size=(8,1))],
             [sg.Input(key = 'file_out_1', size=(60,1)), sg.Text('Output')],
-            [sg.Button(button_text='Save', key='consumo', size=(8,1))], 
+            [sg.Button(button_text='Save...', key='consumo', size=(8,1))], 
 
             [sg.Text('Transacton Test:')],
             [sg.Input(key="file_in_2", size=(60,1)),sg.FileBrowse(file_types=(("CSV Files", ".*csv"),), size=(8,1))], 
@@ -34,12 +34,11 @@ layout = [  [sg.Text('Consumption Test:')],
             [sg.Input(key = 'file_out_3', size=(60,1)), sg.Text('Output')],
             [sg.Button(button_text='Save...', key='carga', size=(8,1))],
 
-            [sg.Text('Discharger Test:')],
+            [sg.Text('Discharge Test:')],
             [sg.Input(key="file_in_4", size=(60,1)),sg.FileBrowse(file_types=(("CSV Files", ".*csv"),), size=(8,1))], 
             [sg.Input(key = 'file_out_4', size=(60,1)), sg.Text('Output')],
             [sg.Button(button_text='Save...', key='descarga', size=(8,1))],
 
-            [sg.Cancel(button_text='Close', size=(8,1))]
             ]    
 
 
@@ -58,12 +57,11 @@ while TRUE:
         t1 = cenario1_2(file_in, file_out)
         consume_param.saveAsPDF1(file_out, t1[0], t1[1], t1[2])
         layout_img = [[sg.Image(f'Visualization\{file_out}.png')]]
-        window_img = sg.Window('Graph Visualization', layout_img, finalize= True, location=(575,0), size=(955,560))
+        window_img = sg.Window('Graph Visualization', layout_img, finalize= True, location=(566,0), size=(955,530))
         sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.png\n{file_out}.pdf\n{file_out}.txt")
         webbrowser.open_new(f'Relatórios\\{file_out}.pdf')
 
     elif event == 'trans':
-        sg.theme('LightPurple')
         layout = [[sg.Checkbox('Printer model', default= False, key= '-IN-')],
             
             [sg.Text('Transação 1'),sg.Text(' '*29) ,sg.Text('Transação 2'),sg.Text(' '*29),sg.Text('Transação 3'),sg.Text(' '*29),sg.Text('Transação 4'),sg.Text(' '*29),sg.Text('Transação 5')],
@@ -91,12 +89,10 @@ while TRUE:
         window2.close()    
 
     elif event == 'carga':
-        sg.theme('LightPurple')
-
         layout = [[sg.Checkbox('Possible to read header?', key= '-IN-'),sg.Text(' '*50), sg.Input(key= 't_header_0', size=(8,1)),sg.Text('Time to 1 Bars [hh:mm:ss]'),sg.Text(' '*20), sg.Input(key= 't_header_1', size=(8,1)), sg.Text('Time to 2 Bars [hh:mm:ss]'),sg.Text(' '*20), sg.Input(key= 't_header_2', size=(8,1)),sg.Text('Time to 3 Bars [hh:mm:ss]')],
             [sg.Input(key= 'barras', size=(1,1)),sg.Text("Header's Bars "),sg.Text(' '*65), sg.Input(key= 't_header_3', size=(8,1)), sg.Text('Time to 4 Bars [hh:mm:ss]'),sg.Text(' '*20), sg.Input(key= 't_header_4', size=(8,1)), sg.Text('Time to 5 Bars [hh:mm:ss]'), sg.Text(' '*20), sg.Input(key= 't_header_5', size=(8,1)), sg.Text('Time to 6 Bars [hh:mm:ss]')],
 
-            [sg.Text('Comentário'), sg.Text(' '*75), sg.Checkbox('Cut graph', key= 'cut'),  sg.Input(key= 'zerar', size=(8,1)), sg.Text('Cut graph from how many seconds?')],
+            [sg.Text('Comment'), sg.Text(' '*75), sg.Checkbox('Cut graph', key= 'cut'),  sg.Input(key= 'zerar', size=(8,1)), sg.Text('Cut graph from how many seconds?')],
             [sg.Multiline(key= 'comment', size=(50,5), default_text='Comment if is not possible')],
                         
             [sg.Text(' '*340),sg.Button('Save', key= 'Save4'), sg.Cancel(button_text='Close')]
@@ -126,13 +122,10 @@ while TRUE:
                 sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.jpg\n{file_out}.pdf\n{file_out}.txt")  
 
     elif event == 'descarga':
-        sg.theme('LightPurple')
-
-
         layout = [[sg.Checkbox('Possible to read header?', key= '-IN-'), sg.Text(' '*50), sg.Input(key= 't_header_5', size=(8,1)), sg.Text('Time to 5 bars [hh:mm:ss]'), sg.Text(' '*20), sg.Input(key= 't_header_4', size=(8,1)), sg.Text('Time to 4 Bars [hh:mm:ss]'),sg.Text(' '*20) ,sg.Input(key= 't_header_3', size=(8,1)), sg.Text('Time to 3 bars [hh:mm:ss]')],  
             [sg.Input(key= 'barras', size=(1,1)),sg.Text("Header's Bars "),sg.Text(' '*65), sg.Input(key= 't_header_2', size=(8,1)), sg.Text('Time to 2 bars [hh:mm:ss]'),sg.Text(' '*20), sg.Input(key= 't_header_1', size=(8,1)), sg.Text('Time to 1 Bars [hh:mm:ss]'),sg.Text(' '*20), sg.Input(key= 't_header_0', size=(8,1)), sg.Text('Time to 0 bars [hh:mm:ss]')],
             
-            [sg.Text('Comentário'), sg.Text(' '*75), sg.Checkbox('Cut graph', key= 'cut'),  sg.Input(key= 'zerar', size=(8,1)), sg.Text('Cut graph from how many seconds?')],
+            [sg.Text('Comment'), sg.Text(' '*75), sg.Checkbox('Cut graph', key= 'cut'),  sg.Input(key= 'zerar', size=(8,1)), sg.Text('Cut graph from how many seconds?')],
             [sg.Multiline(key= 'comment', size=(50,5), default_text='Comente caso não seja possível.')],
             [sg.Text(' '*340),sg.Button('Save', key= 'Save5'), sg.Cancel(button_text='Close')]
                         
@@ -148,7 +141,7 @@ while TRUE:
                 t1 = cenario5(file_in,file_out,values5)
                 layout_img = [[sg.Image(f'Visualization\{file_out}.png')]]
                 window_img = sg.Window('Graph Visualization', layout_img, finalize= True, location=(566,0), size=(955,530)) 
-                                                                          
+
                 if values5['cut'] == True:
                     window_img.close()
                     zerar = int(values5['zerar'])  
@@ -156,8 +149,7 @@ while TRUE:
                     layout_img2 = [[sg.Image(f'Visualization\{file_out}.png')]]
                     window_img = sg.Window('Graph Visualization', layout_img2, finalize= True, location=(566,0), size=(955,530))  
                 discharge_param.saveAsPDF5(file_out, t1[1], t1[2], t1[3], t1[4], t1[5], t1[6], t1[7], t1[8], t1[9],t1[10])    
-                layout_img = [[sg.Image(f'Visualization\{file_out}.png')]]
-                window_img = sg.Window('Graph Visualization', layout_img, finalize= True, location=(566,0), size=(955,530))    
+                webbrowser.open_new(f'Relatórios\\{file_out}.pdf')
                 sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.jpg\n{file_out}.pdf\n{file_out}.txt") 
 
 window.close()        
