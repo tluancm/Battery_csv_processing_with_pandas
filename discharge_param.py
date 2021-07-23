@@ -68,7 +68,6 @@ def cenario5(file_in, file_out, values5):
     plt.suptitle(f'{file_out}'+" gráfico", fontsize= 26)
     plt.savefig(f'Visualization\\{file_out}.png', dpi = 47)
     plt.savefig(f'Relatórios\\{file_out}.jpg', dpi = 600)
-    # plt.show()
     
     media = (round(df4["Tensão"].mean(), 5)) 
     minimo = (round(df4["Tensão"].min(), 5))
@@ -110,5 +109,5 @@ def graph2(file_out,df6, zerar):
     plt.xlabel('tempo [s]', fontsize=22)
     plt.ylabel('Bateria [%]', fontsize=22)
     plt.suptitle(f'{file_out}'+" gráfico", fontsize= 26)
+    plt.savefig(f'Visualization\\{file_out}.png', dpi = 47)
     plt.savefig(f'Relatórios\\{file_out}.jpg', dpi = 600)
-    plt.show()        

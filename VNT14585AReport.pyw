@@ -94,7 +94,7 @@ while TRUE:
         sg.theme('LightPurple')
 
         layout = [[sg.Checkbox('Possible to read header?', key= '-IN-'),sg.Text(' '*50), sg.Input(key= 't_header_0', size=(8,1)),sg.Text('Time to 1 Bars [hh:mm:ss]'),sg.Text(' '*20), sg.Input(key= 't_header_1', size=(8,1)), sg.Text('Time to 2 Bars [hh:mm:ss]'),sg.Text(' '*20), sg.Input(key= 't_header_2', size=(8,1)),sg.Text('Time to 3 Bars [hh:mm:ss]')],
-            [sg.Input(key= 'barras', size=(1,1)),sg.Text("Header's Bars: "),sg.Text(' '*64), sg.Input(key= 't_header_3', size=(8,1)), sg.Text('Time to 4 Bars [hh:mm:ss]'),sg.Text(' '*20), sg.Input(key= 't_header_4', size=(8,1)), sg.Text('Time to 5 Bars [hh:mm:ss]'), sg.Text(' '*20), sg.Input(key= 't_header_5', size=(8,1)), sg.Text('Time to 6 Bars [hh:mm:ss]')],
+            [sg.Input(key= 'barras', size=(1,1)),sg.Text("Header's Bars "),sg.Text(' '*65), sg.Input(key= 't_header_3', size=(8,1)), sg.Text('Time to 4 Bars [hh:mm:ss]'),sg.Text(' '*20), sg.Input(key= 't_header_4', size=(8,1)), sg.Text('Time to 5 Bars [hh:mm:ss]'), sg.Text(' '*20), sg.Input(key= 't_header_5', size=(8,1)), sg.Text('Time to 6 Bars [hh:mm:ss]')],
 
             [sg.Text('Comentário'), sg.Text(' '*75), sg.Checkbox('Cut graph', key= 'cut'),  sg.Input(key= 'zerar', size=(8,1)), sg.Text('Cut graph from how many seconds?')],
             [sg.Multiline(key= 'comment', size=(50,5), default_text='Comment if is not possible')],
@@ -128,47 +128,36 @@ while TRUE:
     elif event == 'descarga':
         sg.theme('LightPurple')
 
-        
-        layout = [[sg.Checkbox('É possível obter a carga pelo header?', key= '-IN-')],
-            [sg.Text('Comentário')],
+
+        layout = [[sg.Checkbox('Possible to read header?', key= '-IN-'), sg.Text(' '*50), sg.Input(key= 't_header_5', size=(8,1)), sg.Text('Time to 5 bars [hh:mm:ss]'), sg.Text(' '*20), sg.Input(key= 't_header_4', size=(8,1)), sg.Text('Time to 4 Bars [hh:mm:ss]'),sg.Text(' '*20) ,sg.Input(key= 't_header_3', size=(8,1)), sg.Text('Time to 3 bars [hh:mm:ss]')],  
+            [sg.Input(key= 'barras', size=(1,1)),sg.Text("Header's Bars "),sg.Text(' '*65), sg.Input(key= 't_header_2', size=(8,1)), sg.Text('Time to 2 bars [hh:mm:ss]'),sg.Text(' '*20), sg.Input(key= 't_header_1', size=(8,1)), sg.Text('Time to 1 Bars [hh:mm:ss]'),sg.Text(' '*20), sg.Input(key= 't_header_0', size=(8,1)), sg.Text('Time to 0 bars [hh:mm:ss]')],
+            
+            [sg.Text('Comentário'), sg.Text(' '*75), sg.Checkbox('Cut graph', key= 'cut'),  sg.Input(key= 'zerar', size=(8,1)), sg.Text('Cut graph from how many seconds?')],
             [sg.Multiline(key= 'comment', size=(50,5), default_text='Comente caso não seja possível.')],
-            
-            [sg.Input(key= 'barras', size=(1,1)),sg.Text('Quantidade de barras no header:')],
-            
-            [sg.Input(key= 't_header_5', size=(8,1)), sg.Text('Tempo para atingir 5 Barras [hh:mm:ss]')],
-            [sg.Input(key= 't_header_4', size=(8,1)), sg.Text('Tempo para atingir 4 Barras [hh:mm:ss]')],
-            [sg.Input(key= 't_header_3', size=(8,1)), sg.Text('Tempo para atingir 3 Barras [hh:mm:ss]')],
-            [sg.Input(key= 't_header_2', size=(8,1)), sg.Text('Tempo para atingir 2 Barras [hh:mm:ss]')],
-            [sg.Input(key= 't_header_1', size=(8,1)), sg.Text('Tempo para atingir 1 Barras [hh:mm:ss]')],
-            [sg.Input(key= 't_header_0', size=(8,1)), sg.Text('Tempo para atingir 0 Barras [hh:mm:ss]')],  
-            [sg.Button('Save'), sg.Cancel(button_text='Close')],
+            [sg.Text(' '*340),sg.Button('Save', key= 'Save5'), sg.Cancel(button_text='Close')]
+                        
             ]    
-        window5 = sg.Window('VNT 14585A Report Discharge Parameters', layout, finalize= TRUE, modal=True)
+        window5 = sg.Window('Discharge Test Parameters', layout, finalize= TRUE, modal=True,location=(0,569), size=(1520, 216) )
         while TRUE:
             event5, values5 = window5.read()
             if (event5 == sg.WINDOW_CLOSED or event5 == 'Close') : 
                 break
-            elif event5 == 'Save':
+            elif event5 == 'Save5':
                 file_in = values['file_in_4']
                 file_out = values['file_out_4']
-                t1 = cenario5(file_in,file_out,values5)                             
-                layout = [[sg.Input(key= 'zerar'), sg.Text('Cut graph from how many seconds?')],
-                [sg.Button('Apply', key= 'apply'), sg.Cancel('Cancel', key= 'cancel')]]
-                window6 = sg.Window("Graph", layout, modal=True)
-                while True:
-                    event6, values6 = window6.read()
-                    if (event6 == sg.WIN_CLOSED or event6 == 'cancel'):
-                        break
-                    elif event6 == 'apply':
-                        s = False
-                        zerar = int(values6['zerar'])  
-                        graph2(file_out,t1[0], zerar) 
-                        break   
+                t1 = cenario5(file_in,file_out,values5)
+                layout_img = [[sg.Image(f'Visualization\{file_out}.png')]]
+                window_img = sg.Window('Graph Visualization', layout_img, finalize= True, location=(566,0), size=(955,530)) 
+                                                                          
+                if values5['cut'] == True:
+                    window_img.close()
+                    zerar = int(values5['zerar'])  
+                    graph2(file_out,t1[0], zerar) 
+                    layout_img2 = [[sg.Image(f'Visualization\{file_out}.png')]]
+                    window_img = sg.Window('Graph Visualization', layout_img2, finalize= True, location=(566,0), size=(955,530))  
                 discharge_param.saveAsPDF5(file_out, t1[1], t1[2], t1[3], t1[4], t1[5], t1[6], t1[7], t1[8], t1[9],t1[10])    
                 layout_img = [[sg.Image(f'Visualization\{file_out}.png')]]
                 window_img = sg.Window('Graph Visualization', layout_img, finalize= True, location=(566,0), size=(955,530))    
-                sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.png\n{file_out}.pdf\n{file_out}.txt")
-                window6.close()  
-        window5.close()
+                sg.popup(f"Salvos na pasta Relatórios: \n{file_out}.jpg\n{file_out}.pdf\n{file_out}.txt") 
 
 window.close()        
