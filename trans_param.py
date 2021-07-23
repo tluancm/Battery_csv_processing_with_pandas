@@ -87,7 +87,7 @@ def cenario3(file_in, file_out,values2):
 
     df = pd.read_csv(file_in,skiprows=(3))#convert csv to dataframe
     df['Time'] = df['Time'].round(decimals = 1)
-    df2 = df.rename(columns = {df.columns[2]: "Corrente"}, inplace= False)#rename the column "Corrente"
+    df2 = df.rename(columns = {df.columns[1]: "Corrente"}, inplace= False)#rename the column "Corrente"
     df3 = df2.set_index('Time')#create df3 with index seted as "Time" column from df2
     df3["Corrente"] = df3["Corrente"].multiply(1000)
     df4 = pd.DataFrame(df3, columns = ["Corrente"])#create a subdataframe df4 with column "Corrente" from df3
@@ -103,6 +103,7 @@ def cenario3(file_in, file_out,values2):
     plt.xlabel('tempo [s]', fontsize=22)
     plt.ylabel('Corrente [mA]', fontsize=22)
     plt.suptitle(f'{file_out}'+" gráfico", fontsize= 26)
+    plt.savefig(f'Visualization\\{file_out}.png', dpi = 47)
     plt.savefig(f'Relatórios\\{file_out}.jpg', dpi = 600)
 
     df4["Corrente"] = df4["Corrente"].multiply(1/1000)#variables will be presented as Ampere unity

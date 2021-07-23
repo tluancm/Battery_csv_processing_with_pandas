@@ -39,6 +39,7 @@ def cenario1_2(file_in,file_out):
     plt.xlabel('tempo [s]', fontsize=22)
     plt.ylabel('Corrente [mA]', fontsize=22)
     plt.suptitle(f'{file_out}'+" gráfico", fontsize= 26)
+    plt.savefig(f'Visualization\\{file_out}.png', dpi = 47)
     plt.savefig(f'Relatórios\\{file_out}.jpg', dpi = 600)
 
     df4["Corrente"] = df4["Corrente"].multiply(1/1000)#variables will be presented as Ampere unity
