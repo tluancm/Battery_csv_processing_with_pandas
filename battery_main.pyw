@@ -45,7 +45,7 @@ layout = [  [sg.Checkbox('14585A', key= '14585a', enable_events= True), sg.Check
             ]    
 
 
-window = sg.Window('VNT 14585A Report', layout, finalize= TRUE, location=(0,0), size=(550, 530), icon="Assets\\vnt_icone.ico")
+window = sg.Window('VNT Battery Report', layout, finalize= TRUE, location=(0,0), size=(550, 530), icon="Assets\\vnt_icone.ico")
 if not os.path.exists('Relatórios'):
             os.mkdir(r'Relatórios')#create directory
 if not os.path.exists('Visualization'):
