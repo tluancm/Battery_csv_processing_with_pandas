@@ -1,6 +1,6 @@
 from tkinter.constants import TRUE
 import PySimpleGUI as sg
-from PySimpleGUI.PySimpleGUI import Checkbox      
+from PySimpleGUI.PySimpleGUI import Checkbox, WINDOW_CLOSED      
 import matplotlib.pyplot as plt#provide way to generate graph
 import os
 
@@ -19,7 +19,10 @@ import webbrowser
 
 sg.theme('DarkBlue')  # please make your creations colorful
 
-layout = [  [sg.Text('Consumption Test:')],
+layout = [  [sg.Checkbox('14585A', key= '14585a', enable_events= True), sg.Checkbox('Benchvue DMM', key= 'dmm', enable_events= True), sg.Input('Sample rate in seconds', key = 'sample')],
+    
+    
+            [sg.Text('Consumption Test:')],
             [sg.Input(key = 'file_in_1', size=(60,1)), sg.FileBrowse( file_types=(("CSV Files", ".*csv"),), size=(8,1))],
             [sg.Input(key = 'file_out_1', size=(60,1)), sg.Text('Output')],
             [sg.Button(button_text='Save...', key='consumo', size=(8,1))], 
@@ -51,10 +54,14 @@ while TRUE:
     event, values = window.read()
     if (event == sg.WINDOW_CLOSED or event == 'Close') : 
         break
+    elif event == '14585a':
+        window['dmm'].update(False)  
+    elif event == 'dmm':
+        window['14585a'].update(False)
     elif event == 'consumo':
         file_in = values['file_in_1']
         file_out = values['file_out_1']
-        t1 = cenario1_2(file_in, file_out)
+        t1 = cenario1_2(file_in, file_out, values['dmm'], values['sample'])
         consume_param.saveAsPDF1(file_out, t1[0], t1[1], t1[2])
         layout_img = [[sg.Image(f'Visualization\{file_out}.png')]]
         window_img = sg.Window('Graph Visualization', layout_img, finalize= True, location=(566,0), size=(955,530))

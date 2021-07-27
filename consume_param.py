@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import sys
 from fpdf import FPDF
+import numpy as np
 
 def saveAsPDF1(file_out, media, minimo, maximo):#print output as pdf file
     pdf = FPDF()
@@ -28,12 +29,22 @@ def saveAstxt1(file_out, text):#open a txt file and write the results
     sys.stdout.close()
 
 
-def cenario1_2(file_in,file_out):
-    df = pd.read_csv(file_in,skiprows=(3))#convert csv to dataframe
-    df2 = df.rename(columns = {df.columns[2]: "Corrente"}, inplace= False)#rename the column "Corrente"
-    df3 = df2.set_index('Time')#create df3 with index seted as "Time" column from df2
-    df3["Corrente"] = df3["Corrente"].multiply(1000)
-    df4 = pd.DataFrame(df3, columns = ["Corrente"])#create a subdataframe df4 with column "Corrente" from df3
+def cenario1_2(file_in,file_out, dmm, sample = 0):
+    
+    if dmm == False:
+        df = pd.read_csv(file_in,skiprows=(3))#convert csv to dataframe
+        df2 = df.rename(columns = {df.columns[2]: "Corrente"}, inplace= False)#rename the column "Corrente"
+        df3 = df2.set_index('Time')#create df3 with index seted as "Time" column from df2
+        df3["Corrente"] = df3["Corrente"].multiply(1000)
+        df4 = pd.DataFrame(df3, columns = ["Corrente"])#create a subdataframe df4 with column "Corrente" from df3
+    else:
+        df = pd.read_csv(file_in,skiprows=(15), delimiter= ';', decimal= ',')#convert csv to dataframe
+        df['Tempo [s]'] = np.arange(0,int(len(df.index)), 1)
+        df['Tempo [s]'] = df['Tempo [s]'].multiply(float(sample))
+        df2 = df.rename(columns = {df.columns[1]: "Corrente"}, inplace= False)#rename the column "Corrente" 
+        df4 = df2.set_index('Tempo [s]')#create df3 with index seted as "Time" column from df2
+        df4.drop('Time (s)',inplace= True, axis=1)
+        df4["Corrente"] = df4["Corrente"].multiply(1000)
 
     df4.plot( grid = True, legend = False, figsize = (19.20,10.80))
     plt.xlabel('tempo [s]', fontsize=22)
