@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import sys
 from fpdf import FPDF
 import time
+import numpy as np
 
 def saveAsPDF4(file_out, media, minimo, maximo, t_carga, flag, barras, t_conv_list, t_header, battery,comment):#print output as pdf file
     pdf = FPDF()
@@ -51,12 +52,22 @@ def saveAstxt4(file_out, text):#open a txt file and write the results
     print(text)
     sys.stdout.close()      
 
-def cenario4(file_in, file_out,values3):
-    df = pd.read_csv(file_in,skiprows=(3))#convert csv to dataframe
-    df['Time'] = df['Time'].round(decimals = 0)
-    df2 = df.rename(columns = {df.columns[1]: "Tensão"}, inplace= False)#create df2 with df renamed columns
-    df3 = df2.set_index('Time')#create df3 with df2 time columns as index
-    df4 = pd.DataFrame(df3, columns = ["Tensão"])#create a df4 subdataframe with df3 columns "Tensão"
+def cenario4(file_in, file_out,values3, dmm, sample):
+
+    if dmm == False:
+        df = pd.read_csv(file_in,skiprows=(3))#convert csv to dataframe
+        df['Time'] = df['Time'].round(decimals = 0)
+        df2 = df.rename(columns = {df.columns[1]: "Tensão"}, inplace= False)#create df2 with df renamed columns
+        df3 = df2.set_index('Time')#create df3 with df2 time columns as index
+        df4 = pd.DataFrame(df3, columns = ["Tensão"])#create a df4 subdataframe with df3 columns "Tensão"
+
+    else:
+        df = pd.read_csv(file_in,skiprows=(16), delimiter= ';', decimal= ',')#convert csv to dataframe
+        df['Tempo [s]'] = np.arange(0,int(len(df.index)), 1)
+        df['Tempo [s]'] = df['Tempo [s]'].multiply(float(sample))
+        df2 = df.rename(columns = {df.columns[1]: "Tensão"}, inplace= False)#rename the column "Corrente" 
+        df4 = df2.set_index('Tempo [s]')#create df3 with index seted as "Time" column from df2
+        df4.drop('Time (s)',inplace= True, axis=1)
 
     df4['Bateria[%]'] = (df4["Tensão"]-df4["Tensão"].min())*100/(df4["Tensão"].max()-df4["Tensão"].min())#calculate the battery %charge
     df5 = pd.DataFrame(df4, columns = ['Bateria[%]'])#create a subdataframe df5 with df4 "Bateria [%]" column

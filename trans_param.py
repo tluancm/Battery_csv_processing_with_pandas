@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import sys
 from fpdf import FPDF
 import statistics as sts#can operate easily on lists
+import numpy as np
 
 def saveAsPDF3(file_out, ti,tf,dt,mean2,dt_mean,mean_t,imp1,imp2,mean_imp1,mean_imp2):#print output as pdf file
     pdf = FPDF()
@@ -52,7 +53,7 @@ def saveAstxt3(file_out, text):#open a txt file and write the results
     sys.stdout.close()
 
 
-def cenario3(file_in, file_out,values2):
+def cenario3(file_in, file_out,values2, dmm, sample = 0):
     ti =[]
     tf = []
     dt = []
@@ -84,13 +85,21 @@ def cenario3(file_in, file_out,values2):
     dt_mean = sts.mean(dt)#calculate the mean of transaction time
     ti_m = [c*2 for c in ti]#convert the time inputs to represent your associated index   
     tf_m = [c*2 for c in tf]
-
-    df = pd.read_csv(file_in,skiprows=(3))#convert csv to dataframe
-    df['Time'] = df['Time'].round(decimals = 1)
-    df2 = df.rename(columns = {df.columns[1]: "Corrente"}, inplace= False)#rename the column "Corrente"
-    df3 = df2.set_index('Time')#create df3 with index seted as "Time" column from df2
-    df3["Corrente"] = df3["Corrente"].multiply(1000)
-    df4 = pd.DataFrame(df3, columns = ["Corrente"])#create a subdataframe df4 with column "Corrente" from df3
+    if dmm == False:
+        df = pd.read_csv(file_in,skiprows=(3))#convert csv to dataframe
+        df['Time'] = df['Time'].round(decimals = 1)
+        df2 = df.rename(columns = {df.columns[1]: "Corrente"}, inplace= False)#rename the column "Corrente"
+        df3 = df2.set_index('Time')#create df3 with index seted as "Time" column from df2
+        df3["Corrente"] = df3["Corrente"].multiply(1000)
+        df4 = pd.DataFrame(df3, columns = ["Corrente"])#create a subdataframe df4 with column "Corrente" from df3
+    else:
+        df = pd.read_csv(file_in,skiprows=(15), delimiter= ';', decimal= ',')#convert csv to dataframe
+        df['Tempo [s]'] = np.arange(0,int(len(df.index)), 1)
+        df['Tempo [s]'] = df['Tempo [s]'].multiply(float(sample))
+        df2 = df.rename(columns = {df.columns[1]: "Corrente"}, inplace= False)#rename the column "Corrente" 
+        df4 = df2.set_index('Tempo [s]')#create df3 with index seted as "Time" column from df2
+        df4.drop('Time (s)',inplace= True, axis=1)
+        df4["Corrente"] = df4["Corrente"].multiply(1000)    
 
     mean = []
 

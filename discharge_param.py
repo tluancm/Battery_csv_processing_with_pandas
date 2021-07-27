@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import sys
 from fpdf import FPDF
 import time
+import numpy as np
 
 def saveAsPDF5(file_out, media, minimo, maximo, t_descarga, flag, barras, t_conv_list, t_header, battery, comment):#print output as pdf file
     pdf = FPDF()
@@ -52,12 +53,21 @@ def saveAstxt5(file_out, text):#open a txt file and write the results
     print(text)
     sys.stdout.close()
 
-def cenario5(file_in, file_out, values5):
-    df = pd.read_csv(file_in,skiprows=(3))#convert csv to dataframe
-    df['Time'] = df['Time'].round(decimals = 0)
-    df2 = df.rename(columns = {df.columns[1]: "Tensão"}, inplace= False)#create df2 with df renamed column
-    df3 = df2.set_index('Time')#create df3 with index as df2 column
-    df4 = pd.DataFrame(df3, columns = ["Tensão"])#create a subdf df4 with column "Tensão" from df3
+def cenario5(file_in, file_out, values5, dmm, sample =0):
+    if dmm == False:
+        df = pd.read_csv(file_in,skiprows=(3))#convert csv to dataframe
+        df['Time'] = df['Time'].round(decimals = 0)
+        df2 = df.rename(columns = {df.columns[1]: "Tensão"}, inplace= False)#create df2 with df renamed column
+        df3 = df2.set_index('Time')#create df3 with index as df2 column
+        df4 = pd.DataFrame(df3, columns = ["Tensão"])#create a subdf df4 with column "Tensão" from df3
+
+    else:
+        df = pd.read_csv(file_in,skiprows=(16), delimiter= ';', decimal= ',')#convert csv to dataframe
+        df['Tempo [s]'] = np.arange(0,int(len(df.index)), 1)
+        df['Tempo [s]'] = df['Tempo [s]'].multiply(float(sample))
+        df2 = df.rename(columns = {df.columns[1]: "Tensão"}, inplace= False)#rename the column "Corrente" 
+        df4 = df2.set_index('Tempo [s]')#create df3 with index seted as "Time" column from df2
+        df4.drop('Time (s)',inplace= True, axis=1)    
 
     df4['Bateria[%]'] = (df4["Tensão"]-df4["Tensão"].min())*100/(df4["Tensão"].max()-df4["Tensão"].min())#Calculate battery %
     df5 = pd.DataFrame(df4, columns = ['Bateria[%]'])#create a df5 dataframe with df4 column

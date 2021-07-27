@@ -19,7 +19,7 @@ import webbrowser
 
 sg.theme('DarkBlue')  # please make your creations colorful
 
-layout = [  [sg.Checkbox('14585A', key= '14585a', enable_events= True), sg.Checkbox('Benchvue DMM', key= 'dmm', enable_events= True), sg.Input('Sample rate in seconds', key = 'sample')],
+layout = [  [sg.Checkbox('14585A', key= '14585a', enable_events= True), sg.Checkbox('Benchvue DMM', key= 'dmm', enable_events= True), sg. Text('DMM sample rate [s]'),sg.Input( key = 'sample', size=(5,1))],
     
     
             [sg.Text('Consumption Test:')],
@@ -87,7 +87,7 @@ while TRUE:
             elif event2 == 'Save':
                 file_in = values['file_in_2']
                 file_out = values['file_out_2']
-                t1 = cenario3(file_in, file_out, values2)
+                t1 = cenario3(file_in, file_out, values2, values['dmm'], values['sample'])
                 trans_param.saveAsPDF3(file_out,t1[0],t1[1],t1[2],t1[3],t1[4],t1[5],t1[6],t1[7],t1[8],t1[9])
                 layout_img = [[sg.Image(f'Visualization\{file_out}.png')]]
                 window_img = sg.Window('Graph Visualization', layout_img, finalize= True, location=(566,0), size=(955,530))
@@ -114,7 +114,7 @@ while TRUE:
             elif event3 == 'Save4':
                 file_in = values['file_in_3']
                 file_out = values['file_out_3']
-                t1 = cenario4(file_in,file_out,values3)                             
+                t1 = cenario4(file_in,file_out,values3, values['dmm'], values['sample'])                             
                 layout_img = [[sg.Image(f'Visualization\{file_out}.png')]]
                 window_img = sg.Window('Graph Visualization', layout_img, finalize= True, location=(566,0), size=(955,530))
             
@@ -145,7 +145,7 @@ while TRUE:
             elif event5 == 'Save5':
                 file_in = values['file_in_4']
                 file_out = values['file_out_4']
-                t1 = cenario5(file_in,file_out,values5)
+                t1 = cenario5(file_in,file_out,values5, values['dmm'], values['sample'])
                 layout_img = [[sg.Image(f'Visualization\{file_out}.png')]]
                 window_img = sg.Window('Graph Visualization', layout_img, finalize= True, location=(566,0), size=(955,530)) 
 
